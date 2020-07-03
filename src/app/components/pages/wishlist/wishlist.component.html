@@ -1,0 +1,102 @@
+  xc<app-header></app-header>
+<!-- Breadcrumbs -->
+<div class="breadcrumbs">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="bread-inner">
+          <ul class="bread-list">
+            <li><a [routerLink]="['/home']" >Acceuil<i class="ti-arrow-right"></i></a></li>
+            <li class="active">Liste des veux</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Breadcrumbs -->
+
+<!-- Shopping Cart -->
+<div class="shopping-cart section">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <!-- Shopping Summery -->
+        <table class="table shopping-summery">
+          <thead>
+          <tr class="main-hading">
+            <th>PRODUIT</th>
+            <th>INFORMATION</th>
+            <th class="text-center">QUANTITE</th>
+            <th class="text-center"><i class="fa fa-shopping-bag"></i></th>
+            <th class="text-center"><i class="ti-trash remove-icon"></i></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let productInOrder of productInOrders">
+            <td class="embed-responsive embed-responsive-16by9 "  size="40" data-title="No">
+              <a  routerLink="/product/{{productInOrder.productId}}">
+                <img class="embed-responsive-item "  src='data:image/jpeg;base64,{{productInOrder?.productIcon?.picByte}}'alt="#">
+              </a></td>
+            <td class="product-des" data-title="Description">
+              <p class="product-name">  <a routerLink="/product/{{productInOrder.productId}}">{{productInOrder?.productName}}</a></p>
+              <p class="product-des">{{productInOrder?.productMarque}}</p>
+              <p class="product-des">{{productInOrder?.productReference}}</p>
+              <p class="product-des">{{productInOrder?.productTyp}}</p>
+            </td>
+            <td class="qty" data-title="Qty"><!-- Input Order -->
+              <div class="input-group">
+                <div class="button minus">
+                  <button type="button" class="btn btn-primary btn-number" (click)="minusOne(productInOrder)" data-type="minus" data-field="quant[1]">
+                    <i class="ti-minus"></i>
+                  </button>
+                </div>
+                <input  class="input-number"
+                       id="{{productInOrder.productId}}"
+                       [(ngModel)]="productInOrder.count"
+                       (change)="onChange(productInOrder)"
+                       size="5"
+                       type="number"
+                       required
+                       name='count'data-min="1" data-max="100" value="1">
+                <div class="button plus">
+                  <button type="button" class="btn btn-primary btn-number" (click)="addOne(productInOrder)"data-type="plus" data-field="quant[1]">
+                    <i class="ti-plus"></i>
+                  </button>
+                </div>
+              </div>
+              <!--/ End Input Order -->
+            </td>
+            <td class="action" data-title="Remove"><a title="Add to cart" (click)="addToCart(productInOrder)"routerLink="./"><i class="ti-shopping-cart"></i>Ajouter au panier</a></td>
+            <td class="action" data-title="Remove"><a (click)="remove(productInOrder)" routerLink="./"><i class="ti-trash remove-icon"></i></a></td>
+          </tr>
+          </tbody>
+        </table>
+        <!--/ End Shopping Summery -->
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <!-- Total Amount -->
+        <div class="total-amount">
+          <div class="row">
+            <div class="col-lg-4 col-md-7 col-12">
+              <div class="right">
+                <div class="button5">
+                  <a [routerLink]="['/home']"  class="btn  btn-dark btn-lg">Continuer d'acheter</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--/ End Total Amount -->
+      </div>
+    </div>
+    <ng-template #empty>
+      <h4 class="text-muted text-center">La carte est vide!</h4>
+    </ng-template>
+  </div>
+</div>
+<!--/ End Shopping Cart -->
+
+<app-footer></app-footer>

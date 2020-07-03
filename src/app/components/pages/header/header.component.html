@@ -1,0 +1,288 @@
+<header class="header shop">
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 col-md-12 col-12">
+          <!-- Top Left -->
+          <div class="top-left">
+            <ul class="list-main">
+              <li><i class="ti-headphone-alt"></i> +060 (800) 801-582</li>
+              <li><i class="ti-email"></i> support@shophub.com</li>
+            </ul>
+          </div>
+          <!--/ End Top Left -->
+        </div>
+        <div class="col-lg-8 col-md-12 col-12">
+          <!-- Top Right -->
+          <div class="right-content">
+            <ul class="list-main">
+              <li *ngIf="user.id >0"><a (click)="Onclick()" data-toggle="modal"  data-target="#modalprofil"><i class="ti-user"></i>
+                Mon compte</a></li>
+              <li *ngIf="!user.id"><a   [routerLink]="['/login']"><i class="ti-power-off"></i>Se connecter</a></li>
+              <li *ngIf="user.id" ><a  data-toggle="modal" data-target="#logoutModal"><i class="ti-power-off"></i>Se déconecter</a></li>
+              <!-- Nav Item - User Information -->
+              <li class="nav-item dropdown no-arrow">
+                <a class="nav-link dropdown-toggle" href="#" id="logupDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fa fa-user-plus" aria-hidden="true"></i> S'inscrire
+                </a>
+                <!-- Dropdown - User Information -->
+                <div class="dropdown-menu dropdown-menu-left shadow animated--grow-in" aria-labelledby="logupDropdown">
+                  <a class="dropdown-item" [routerLink]="['/register-medcin']" >
+                    <i class="fa fa-user-md fa-1x" aria-hidden="true"></i>
+                    utilisateur
+                  </a>
+                  <a class="dropdown-item" [routerLink]="['/register']">
+                    <i class="fa fa-user-circle-o fa-1x" aria-hidden="true"></i>
+                    Fournisseur
+                  </a>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <!-- End Top Right -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Topbar -->
+  <div class="middle-inner">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-2 col-md-2 col-12">
+          <!-- Logo -->
+          <div class="logo">
+            <a [routerLink]="['/home']"><img src="assets/images/logo.png" alt="logo"></a>
+          </div>
+          <!--/ End Logo -->
+          <!-- Search Form -->
+          <div class="search-top">
+            <div class="top-search"><a href="#0"><i class="ti-search"></i></a></div>
+            <!-- Search Form -->
+            <div class="search-top">
+              <form class="search-form">
+                <input type="text" placeholder="Search here..." name="search">
+                <button value="search" type="submit"><i class="ti-search"></i></button>
+              </form>
+            </div>
+            <!--/ End Search Form -->
+          </div>
+          <!--/ End Search Form -->
+          <div class="mobile-nav"></div>
+        </div>
+        <div class="col-lg-8 col-md-7 col-12">
+          <div class="search-bar-top">
+            <div class="search-bar">
+              <select>
+                <option selected="selected">tout </option>
+                <option  *ngFor="let specialit of speciality" [ngValue]="specialit">{{specialit.name}}</option>
+              </select>
+              <form>
+                <input name="search" placeholder="Search Products Here....." type="search">
+                <button class="btnn"><i class="ti-search"></i></button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-3 col-12">
+          <div class="right-bar">
+            <!-- Search Form -->
+            <div class="sinlge-bar">
+              <a [routerLink]="['/wishlist']" class="single-icon"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+            </div>
+
+            <div class="sinlge-bar shopping">
+              <a routerLink="./" class="single-icon"><i class="ti-bag"></i> <span class="total-count">{{productInOrders.length}}</span></a>
+              <!-- Shopping Item -->
+              <div class="shopping-item">
+                <div class="dropdown-cart-header">
+                  <span>{{productInOrders.length}} Items</span>
+                  <a [routerLink]="['/carte']">Voir le panier</a>
+                </div>
+                <ul class="shopping-list">
+                  <li *ngFor="let productInOrder of productInOrders">
+                    <div>
+                    <a class="remove" title="Remove this item" (click)="remove(productInOrder)" routerLink="./"><i class="fa fa-remove"></i></a>
+                    <a class="image embed-responsive embed-responsive-16by9" routerLink="/product/{{productInOrder.productId}}">
+                      <img class="embed-responsive-item" src='data:image/jpeg;base64,{{productInOrder.productIcon?.picByte}}' alt="#"></a>
+                    <h4><a routerLink="/product/{{productInOrder.productId}}">{{productInOrder.productName}}</a></h4>
+                    <p class="quantity">{{productInOrder.count}}</p></div>
+                  </li>
+
+                </ul>
+                <div class="bottom">
+                  <a *ngIf="user.id>0 && user.role==Role.DOCTOR" [routerLink]="['/checkout']" class="btn animate">demander devis</a>
+                  <a  *ngIf="user.id===0" href="/login" class="btn animate">demander devis</a>
+                </div>
+                <ng-template #empty>
+                  <h4 class="text-muted text-center">La carte est vide!</h4>
+                </ng-template>
+              </div>
+              <!--/ End Shopping Item -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Header Inner -->
+  <div class="header-inner">
+    <div class="container">
+      <div class="cat-nav-head">
+        <div class="row">
+          <div class="col-lg-3">
+
+          </div>
+          <div class="col-lg-9 col-12">
+            <div class="menu-area">
+              <!-- Main Menu -->
+              <nav class="navbar navbar-expand-lg">
+                <div class="navbar-collapse">
+                  <div class="nav-inner">
+                    <ul class="nav main-menu menu navbar-nav">
+                      <li class="active"><a [routerLink]="['/home']">Acceuil</a></li>
+                      <li><a  [routerLink]="['/All-products']" >Nos produits</a></li>
+                      <li><a [routerLink]="['/All-new-products']">Nouveautés</a><span class="new">New</span></li>
+                      <li><a  [routerLink]="['./']">Nos catégories<i class="ti-angle-down"></i></a>
+                        <ul class="dropdown" >
+                          <li  *ngFor="let specialit of speciality">
+                            <a  routerLink="/Speciality-products/{{specialit.id}}"  >{{specialit.name}}</a></li>
+
+                        </ul>
+                      </li>
+                      <li><a  [routerLink]="['/contact']" >Contactez Nous </a></li>
+                      <li><a [routerLink]="['/about']">A propos de nous</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </nav>
+              <!--/ End Main Menu -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/ End Header Inner -->
+</header>
+<!-- Profile modal -->
+
+<div class="modal" id="modalprofil" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabe" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabe">Profile</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <form #prfform="ngForm" (ngSubmit)="onSubmitprf()">
+        <div class="modal-body">
+          <div class="form-group">
+            <input hidden [(ngModel)]="user.id" type="text" class="form-control form-control-lg"
+                   required autofocus id="id" name="id" #id="ngModel">
+
+            <label for="firstnam">Prénom </label>
+            <input [(ngModel)]="user.firstname" type="text" class="form-control form-control-lg"
+                   id="firstnam" name="firstnam" minlength="3"
+                   #firstnam="ngModel" required>
+            <div  *ngIf="firstnam.invalid && (firstnam.dirty ||firstnam.touched)">
+              <div *ngIf="firstnam.errors.required">
+                Le prénom est erroné.
+              </div>
+              <div *ngIf="firstnam.errors.minlength">
+                Le prénom doit comporter au moins 3 caractères.
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="lastnam">Nom *</label>
+            <input [(ngModel)]="user.lastname" type="text" class="form-control form-control-lg"
+                   id="lastnam" name="lastnam"  minlength="3"   #lastnam="ngModel" required>
+            <div  *ngIf="lastnam.invalid && (lastnam.dirty ||lastnam.touched)">
+              <div *ngIf="lastnam.errors.required">
+                Le nom est requis.
+              </div>
+              <div *ngIf="lastnam.errors.minlength">
+                Le nom doit comporter au moins 3 caractères.
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="phon">numéro de téléphone*</label>
+            <input [(ngModel)]="user.phone" type="text" class="form-control form-control-lg" id="phon"
+                   name="phon" placeholder="Phone" minlength="10" #phon="ngModel">
+            <div  *ngIf="phon.invalid && (phon.dirty ||phon.touched)">
+              <div *ngIf="phon.errors.required">
+                numéro de téléphone est requis.
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="emaildoc">Adresse email *</label>
+            <input [(ngModel)]="user.email" type="email" class="form-control form-control-lg" id="emaildoc"
+                   name="emaildoc"  email  autocomplete="@gmail.com"   #emaildoc="ngModel" required>
+            <div  *ngIf="emaildoc.invalid && (emaildoc.dirty ||emaildoc.touched)" >
+              <div *ngIf="emaildoc.errors.required" >
+                Email est requis.
+              </div>
+              <div *ngIf="emaildoc.errors.email">
+                Invalide Email.
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="passworddoc">Mot de passe *</label>
+            <input  [(ngModel)]="user.password" type="password" class="form-control form-control-lg" id="passworddoc"
+                    name="passworddoc" placeholder="Entrer mot de passe" minlength="6"  #passworddoc="ngModel">
+            <div  *ngIf="passworddoc.invalid && (passworddoc.dirty ||passworddoc.touched)">
+              <div *ngIf="passworddoc.errors.required">
+                Password est requis.
+              </div>
+              <div *ngIf="passworddoc.errors.minlength">
+                Le mot de passe doit comporter au moins 6 caractères.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div  *ngIf="t">
+          <div  #alert class="alert alert-success alert-dismissible fade show" role="alert">
+            -<strong> La modification </strong>est bien faite.
+            <!--    <button type="button"  class="close" data-dismiss="alert" aria-label="Close">
+          <span   aria-hidden="true">&times;</span>
+            <span>&times;</span>
+
+            </button>-->
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-lg btn-danger " data-dismiss="modal" >Annuler</button>
+          <button type="submit" class="btn  btn-success btn-lg"
+                  [disabled]="!prfform.form.valid"  >Enregistrer</button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<!-- End Profile modal -->
+
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Voulez vous se déconnecter?</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">Selectionner "Déconnecter" pour fermer votre session.</div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+        <a class="btn btn-outline-primary" href="/login">Déconnecter</a>
+      </div>
+    </div>
+  </div>
+</div>

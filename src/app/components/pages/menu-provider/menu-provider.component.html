@@ -1,0 +1,336 @@
+<!-- Sidebar -->
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+  <!-- Sidebar - Brand -->
+  <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/dashboard">
+    <div class="sidebar-brand-icon rotate-n-15">
+      <i class="fas fa-laugh-wink"></i>
+    </div>
+    <div class="sidebar-brand-text mx-3">Dashboard </div>
+  </a>
+
+  <!-- Divider
+  <hr class="sidebar-divider my-0">
+-->
+  <!-- Nav Item - Dashboard -->
+  <!-- <li class="nav-item active">
+      <a class="nav-link" href="/dashboard">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>Dashboard</span></a>
+         &lt;!&ndash; Divider &ndash;&gt;
+    <hr class="sidebar-divider">
+    </li>-->
+  <br>
+  <hr class="sidebar-divider">
+  <!-- Heading -->
+  <div class="sidebar-heading">
+    Interface
+  </div>
+  <!-- Nav Item -Les spécialités Collapse Menu -->
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapspecialite" aria-expanded="true" aria-controls="collapseUtilities">
+      <i class="fas fa-fw fa-wrench"></i>
+      <span>Spécialités</span>
+    </a>
+    <div id="collapspecialite" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">Gérer Spécialités:</h6>
+        <a class="collapse-item" data-toggle="modal" (click)="listspecialitys()"  data-target="#addspeciality">Ajouter spécialité</a>
+        <a class="collapse-item" [routerLink]="['/liste-speciality']">liste de spécialités</a>
+      </div>
+    </div>
+  </li>
+  <!-- Nav Item  list produits  Collapse Menu -->
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+      <i class="fas fa-fw fa-cog"></i>
+      <span>Les produits</span>
+    </a>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">Gerer produits:</h6>
+        <a class="collapse-item" (click)="ownSpeciality()" data-toggle="modal" data-target="#Addproduct">Ajouter produit</a>
+        <a class="collapse-item" routerLink="/liste-product">liste des produits</a>
+
+      </div>
+    </div>
+  </li>
+  <!-- Divider -->
+  <hr class="sidebar-divider">
+  <!-- Nav Item -Les quotations Collapse Menu -->
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#providers" aria-expanded="true" aria-controls="collapseUtilities">
+      <i class="fa fa-list-ul" aria-hidden="true"></i>
+      <span>Les quotations</span>
+    </a>
+    <div id="providers" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">Gérer quotation:</h6>
+        <a class="collapse-item" [routerLink]="['/liste-orders']">liste des quotations</a>
+      </div>
+    </div>
+  </li>
+
+  <!-- Nav Item -Les reclamations Collapse Menu -->
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#reclamations" aria-expanded="true" aria-controls="collapseUtilities">
+      <i class="fa fa-comments" aria-hidden="true"></i>
+      <span>Les reclamations</span>
+    </a>
+    <div id="reclamations" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">Gérer reclamation:</h6>
+        <a class="collapse-item" [routerLink]="['/liste-complaint']">liste des reclamations</a>
+      </div>
+    </div>
+  </li>
+  <!-- Divider -->
+  <hr class="sidebar-divider">
+  <!-- Heading -->
+  <div class="sidebar-heading">
+    Extensions
+  </div>
+  <!-- Nav Item - Charts -->
+  <li class="nav-item">
+    <a class="nav-link" [routerLink]="['/liste-product']">
+      <i class="fas fa-fw fa-chart-area"></i>
+      <span>Les statistiques</span></a>
+  </li>
+  <!-- Divider -->
+  <hr class="sidebar-divider d-none d-md-block">
+  <!-- Sidebar Toggler (Sidebar)
+  <div class="text-center d-none d-md-inline">
+    <button class="rounded-circle border-0" id="sidebarToggle"></button>
+  </div>-->
+
+</ul>
+<!-- End of Sidebar -->
+<!-- Add speciality modal -->
+
+<div class="modal" id="addspeciality" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabe" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabe">Ajouter spécialité :</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <form #spform="ngForm" (ngSubmit)="Addspeciality()">
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="col-md-12">
+              <div class="card card-plain">
+                <div class="card-header card-header-tabs-danger">
+                  <h6 class="card-title">Mes spécialités</h6>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead class="">
+                        <th>Nom</th><th>Prix</th></thead>
+                      <tbody> <tr *ngFor="let specialit of special">
+                        <td>{{specialit.name}}</td><td>{{specialit.priceSpeciality}}</td></tr>
+                      </tbody></table>
+         </div>
+         </div>
+         </div>
+         </div>
+          </div>
+          <div class="form-group">
+            <label>Prix total d'abonnement</label> {{user.pricesubscription}}
+          </div>
+          <div class="form-group">
+           <label for="speciality">Spécialité *</label>
+           <select multiple class="custom-select custom-select-lg " id="speciality" name="speciality"
+             (change)="totalcalcul()"
+             [(ngModel)]="newspeciality"
+                   required  >
+             <option  [ngValue]="null" disabled>Selectionner votre spécialité</option>
+             <option  *ngFor="let specialit of speciality " [ngValue]="specialit">{{specialit.name}}--{{specialit.priceSpeciality}}
+             </option>
+           </select>
+         </div>
+         <div class="form-group">
+           <label>Future prix total d'abonnement </label>
+           {{total}}
+         </div>
+        </div>
+       <div *ngIf="t">
+         <div class="alert alert-success alert-dismissible fade show" role="alert">
+           -<strong> L ' ajout </strong>est bien fait.
+           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+           </button>
+         </div>
+       </div>
+       <div class="modal-footer">
+         <button type="button" class="btn btn-lg btn-danger " data-dismiss="modal" >Annuler</button>
+         <button type="submit" class="btn  btn-success btn-lg"
+           [disabled]="!spform.form.valid" >Enregistrer</button>
+       </div>
+     </form>
+   </div>
+
+ </div>
+</div>
+<!-- End Add speciality modal -->
+
+<!-- ADD product modal -->
+<div class="modal" id="Addproduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel1">Produit</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <form #uploadForm="ngForm" (ngSubmit)="uploadSubmit()"  >
+        <div class="modal-body">
+          <div class="form-group">
+<!--
+            <input hidden [(ngModel)]="productAdd.id" type="text" name="id" #id="ngModel">
+-->
+            <label for="Name">Nom du produit *</label>
+            <input type="text" [(ngModel)]="productAdd.name" minlength="3"  class="form-control" id="Name"
+                   name="name" placeholder="Enter le nom du produit" required #Name="ngModel" >
+            <div  *ngIf="Name.invalid && (Name.dirty ||Name.touched)">
+              <div *ngIf="Name.errors.required">Le nom est erroné.</div>
+              <div *ngIf="Name.errors.minlength">
+                Le nom doit comporter au moins 3 caractères.
+              </div>
+            </div>
+
+          </div>
+          <div class="form-group">
+            <label for="description">Description *</label>
+            <textarea  rows="4" pattern="[A-Za-z]*" type="text" [(ngModel)]="productAdd.description"  minlength="3" class="form-control" id="description" name="description" placeholder="Enter la description" required #description="ngModel"></textarea>
+            <div  *ngIf="description.invalid && (Name.dirty ||Name.touched)">
+              <div *ngIf="description.errors.required">
+                La description est erronée.
+              </div>
+              <div *ngIf="description.errors.minlength">
+                La description doit comporter au moins 3 caractères.
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="reference">Référence *</label>
+            <textarea rows="3"  type="text" [(ngModel)]="productAdd.reference"  minlength="3" class="form-control" id="reference" name="reference" placeholder="Enter la référence" required #reference="ngModel"></textarea>
+            <div  *ngIf="reference.invalid && (reference.dirty ||reference.touched)">
+              <div *ngIf="reference.errors.required">
+                La référence est erronée.
+              </div>
+              <div *ngIf="reference.errors.minlength">
+                La référence doit comporter au moins 3 caractères.
+              </div>
+            </div>
+
+          </div>
+          <div class="form-group">
+            <label for="marke">marque *</label>
+            <input  type="text" [(ngModel)]="productAdd.marque" class="form-control"  minlength="3" id="marke" name="marke" placeholder="Enter la marque" required #marke="ngModel">
+            <div  *ngIf="marke.invalid && (marke.dirty ||marke.touched)">
+              <div *ngIf="marke.errors.required">
+                La marque est erronée.
+              </div>
+              <div *ngIf="marke.errors.minlength">
+                La référence doit comporter au moins 3 caractères.
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="specialitypd">Catégorie *</label>
+            <select class="custom-select custom-select-lg " id="specialitypd" name="speciality"
+              [(ngModel)]="productAdd.speciality"
+                    required>
+              <option  [ngValue]="null" disabled>Selectionner la catégorie</option>
+              <option *ngFor="let specialit of special" [ngValue]="specialit">{{specialit.name}}</option>
+
+            </select>
+          </div>
+          <div class="form-group">
+            <input  style="display:none" name="file"   type="file" accept=".pdf,.doc,.docx"   (change)="onFileChanged($event)" #fileInpu />
+            <button class="btn btn-link btn-sm"  type="button" (click)="fileInpu.click()"  > brochure</button>
+            <input  style="display:none" type="file"   name="imagee"  type="file" ng2FileSelect  [uploader]="uploader" #fileInput multiple/>
+            <button type="button"  class="btn btn-link btn-sm" (click)="fileInput.click()"  > images</button>
+            <br>
+            <div class="drop-zone">
+              <div ng2FileDrop [uploader]="uploader" class="drop-zone">
+                Drag and drop files to upload
+              </div>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th width="90%">
+                Nom du  fichier
+                  </th>
+                  <th width="10%">
+                    Supprimer
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of uploader.queue">
+                  <th width="90%">
+                    {{item._file.name}}
+                  </th>
+                  <th class="text-center" width="10%">
+                    <!--      <mat-icon (click)="item.remove()">delete</mat-icon>-->
+                    <i class="fa fa-dropbox" (click)="item.remove()">Supprimer</i>
+                  </th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!--        <img [src]="imgURL" height="200" *ngIf="imgURL">-->
+          <!--  <div class="form-group">
+                <label for="image">Images</label>
+                <input type="file" [(ngModel)]="productAdd.images"
+                       class="form-control"
+                       id="image"
+                       name="image"
+                       placeholder="Choisir les images "
+                       required #image="ngModel"
+                       accept="image/*"
+                       (change)="onFileChanged($event)" multiple>
+                <div [hidden]="!image.pristine" class="alert alert-danger">L'image est obligatoire !!</div>
+              </div>-->
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-lg btn-danger " data-dismiss="modal" >Annuler</button>
+          <button type="submit" class="btn btn-success btn-lg"  >Enregistrer</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+<!-- end ADD product modal -->
+
+<!-- Nav Item - Pages Collapse Menu -->
+<!--  <li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+      <i class="fas fa-fw fa-folder"></i>
+      <span>Pages</span>
+    </a>
+    <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">Login Screens:</h6>
+        <a class="collapse-item" href="login.html">Login</a>
+        <a class="collapse-item" href="register.html">Register</a>
+        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+        <div class="collapse-divider"></div>
+        <h6 class="collapse-header">Other Pages:</h6>
+        <a class="collapse-item" href="404.html">404 Page</a>
+        <a class="collapse-item" href="blank.html">Blank Page</a>
+      </div>
+    </div>
+  </li>-->
+
+
+
+

@@ -1,0 +1,130 @@
+<app-header></app-header>
+<!-- Breadcrumbs -->
+<div class="breadcrumbs">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="bread-inner">
+          <ul class="bread-list">
+            <li><a href="/home">Accueil<i class="ti-arrow-right"></i></a></li>
+            <li><a href="/carte">Panier<i class="ti-arrow-right"></i></a></li>
+            <li class="active">Devis</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Breadcrumbs -->
+
+<!-- Start Checkout -->
+<section class="shop checkout section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-12">
+        <div class="checkout-form">
+          <h2>Insérer vos donner</h2>
+          <!-- Form -->
+          <form #form="ngForm" (ngSubmit)="checkout()">
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="form-group">
+                  <label>Prénom<span>*</span></label>
+                  <input [(ngModel)]="user.lastname" class="form-control form-control-lg" type="text" name="name" placeholder="" >
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="form-group">
+                  <label>Nom<span>*</span></label>
+                  <input [(ngModel)]="user.firstname" class="form-control form-control-lg" type="text" name="name" placeholder="" required="required">
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="form-group">
+                  <label>Adresse email <span>*</span></label>
+                  <input [(ngModel)]="user.email" class="form-control form-control-lg" type="email" name="email" placeholder="" required="required">
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="form-group">
+                  <label>Numero téléphone<span>*</span></label>
+                  <input  [(ngModel)]="user.phone" class="form-control form-control-lg" type="number" name="number" placeholder="" required="required">
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="form-group">
+                  <label>Adresse<span>*</span></label>
+                  <input  [(ngModel)]="user.address" class="form-control form-control-lg" type="text" name="address" placeholder="" required="required">
+                </div>
+              </div>
+              <button type="submit" class="btn  btn-success btn-lg"
+                      [disabled]="!form.form.valid"  >Envoyer devis</button>
+            </div>
+          </form>
+          <!--/ End Form -->
+        </div>
+      </div>
+      <div class="col-lg-4 col-12">
+        <div class="order-details">
+          <!-- Order Widget -->
+          <div class="single-widget">
+            <h2>PANIER :</h2>
+            <div class="content">
+              <ul>
+                <li *ngFor="let productInOrder of productInOrders">{{productInOrder.productName}}<span>{{productInOrder.count}}</span></li>
+
+              </ul>
+            </div>
+          </div>
+          <!--/ End Order Widget -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--/ End Checkout -->
+
+<!-- Start Shop Services Area  -->
+<section class="shop-services section home">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 col-md-6 col-12">
+        <!-- Start Single Service -->
+        <div class="single-service">
+          <i class="ti-rocket"></i>
+          <h4>Free shiping</h4>
+          <p>Orders over $100</p>
+        </div>
+        <!-- End Single Service -->
+      </div>
+
+      <div class="col-lg-3 col-md-6 col-12">
+        <!-- Start Single Service -->
+        <div class="single-service">
+          <i class="ti-lock"></i>
+          <h4>Sucure Payment</h4>
+          <p>100% secure payment</p>
+        </div>
+        <!-- End Single Service -->
+      </div>
+      <div class="col-lg-3 col-md-6 col-12">
+        <!-- Start Single Service -->
+        <div class="single-service">
+          <i class="ti-tag"></i>
+          <h4>Best Peice</h4>
+          <p>Guaranteed price</p>
+        </div>
+        <!-- End Single Service -->
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Shop Services -->
+
+<app-footer></app-footer>
+<!-- Map Section -->
+<!--<div class="map-section">
+  <div id="myMap"></div>
+</div>-->
+

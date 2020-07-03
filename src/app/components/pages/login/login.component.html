@@ -1,0 +1,68 @@
+<div class="alert alert-danger" *ngIf="isInvalid">
+  Nom d'utilisateur ou mot de passe invalides.<br>
+  (ou le compte n 'est pas encore été activé par le systéme)
+</div>
+<div class="alert alert-info" *ngIf="isLogout">
+  Vous avez été déconnecté.
+</div>
+<!-- Register Section Begin -->
+<app-header></app-header>
+<div class="register-login-section spad">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 offset-lg-3">
+        <div class="login-form" >
+          <h2>Login</h2>
+          <form #form='ngForm' (ngSubmit)="onSubmit()">
+
+            <div class="group-input form-group">
+              <label for="email">Email addresse *</label>
+              <input type="text" id="email" name="email" placeholder="Enter email" email
+                     class="form-control form-control-lg"
+                     required autofocus [(ngModel)]="model.username" #email="ngModel" autocomplete="@gmail.com" >
+              <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
+                L'email est requis
+              </div></div>
+            <div class="group-input form-group">
+              <label for="password">Password *</label>
+              <input type="password" class="form-control form-control-lg" id="password" name="password"
+                     placeholder="Password" required [(ngModel)]="model.password" #password='ngModel'>
+              <div [hidden]="password.valid || password.pristine" class="alert alert-danger">
+                Password est requis
+              </div>
+            </div>
+            <!--<div class="group-input gi-check">
+              <div class="gi-more">
+                <label for="save-pass">
+                  Save Password
+                  <input type="checkbox" id="save-pass">
+                  <span class="checkmark"></span>
+                </label>
+                <a href="#" class="forget-pass">Forget your Password</a>
+              </div>
+            </div>-->
+            <div class="form-group">
+              <div>
+                <input type="checkbox" id="remember_me" name="remember-me" [(ngModel)]="model.remembered">
+                <label for="remember_me" class="inline">Souviens de moi</label>
+              </div>
+            </div>
+            <button type="submit" class="site-btn login-btn" >
+              Se connecter</button>
+          </form>
+          <div class="switch-login">
+            <a href="/register-medcin" class="or-login">
+              Ou créez un compte utilisteur</a><br>
+          </div>
+            <div class="switch-login">
+            <a href="/register" class="or-login">
+              Ou créez un compte fournisseur</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>
+<!-- Register Form Section End -->
+

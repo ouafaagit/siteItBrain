@@ -181,8 +181,7 @@ Version:1.0
   position: relative;
   font-weight: 500;
   font-size:14px;
-  color: #fff;
-  background: #333;
+
   display: inline-block;
   -webkit-transition: all 0.4s ease;
   -moz-transition: all 0.4s ease;
@@ -227,7 +226,7 @@ Version:1.0
 ========================================*/
 /* Topbar */
 .topbar {
-  background-color: #fff;
+  background-color: #F6F7FB;
   border-bottom: 1px solid #e2e2e2;
   padding: 15px 0;
 }
@@ -738,14 +737,14 @@ Version:1.0
 }
 .header.shop .middle-inner {
   padding: 20px 0;
-  background: #fff;
+  background: #F6F7FB;
   border-top: 1px solid #eee;
 }
 .header.shop.v3 .middle-inner {
   border:none;
 }
 .header.shop .header-inner {
-  background: #333;
+  background: #2c9faf;
 }
 .header.shop.v3 .header-inner {
   background: transparent;
@@ -1167,7 +1166,7 @@ Version:1.0
   color:#fff;
 }
 .header.sticky.v2 .header-inner .nav li:hover a{
-  color:#F7941D;
+  color:#F6F7FB;
 }
 .header.sticky .header-inner .nav li .dropdown li a{
   color:#333;
@@ -1444,8 +1443,8 @@ Version:1.0
 .hero-area3 .small-content .button .btn {
   background: transparent;
   padding: 0;
-  color: #333;
-  border-bottom: 2px solid #333;
+  color: #333333;
+  border-bottom: 2px solid #333333;
   font-size: 13px;
 }
 .hero-area3 .small-content .button .btn:hover{
@@ -4924,7 +4923,9 @@ Version:1.0
 .mail-success .mail-inner .btn i{
   margin-right:5px;
 }
-
+.product-content .btn{
+  color: #96dbe4;
+}
 /*=============================
 	Start 404 Error CSS
 ===============================*/
@@ -5091,6 +5092,8 @@ Version:1.0
   color:#fff;
   text-decoration:underline;
 }
+
+
 /*=============================
 	End Footer CSS
 ===============================*/

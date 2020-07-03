@@ -1,0 +1,339 @@
+<!--<h1 align="center" class="display-4 mb-5">{{title}}</h1>-->
+<!--<div class="row text-center justify-content-center">
+  <div class="col-lg-6 ">
+    <div class="card mb-4 ">
+      <img height="60%" class="card-img-top" src="{{productInfo?.productIcon}}">
+      <div class="card-body">
+        <h4 class="card-title ">{{productInfo?.productName}}</h4>
+        <form name="form" #form='ngForm' (ngSubmit)="productInfo?.productStatus == 0 && addToCart()">
+          <div class="text-left">
+            <input hidden name="productId" [value]=productInfo?.productId>
+            <p class="card-test"><strong>Description: </strong>{{productInfo?.productDescription}}</p>
+            <p class="card-text">
+              <strong>Price: </strong>
+              <label id="price">{{productInfo?.productPrice | currency}}</label>
+            </p>
+            <p class="card-text"><strong>Stock: </strong>{{productInfo?.productStock}}</p>
+
+            <label class="card-text">
+              <strong>Quantity: </strong>
+              <input [(ngModel)]=count
+                     (change)="validateCount()"
+                     type="number"
+                     name="count"
+                     required
+                     min="1"
+                     [max]=productInfo?.productStock
+              >
+            </label>
+
+
+            <p class="card-text"><strong>Subtotal: </strong>
+              <label id="subtotal">{{count * productInfo?.productPrice | currency}}</label>
+            </p>
+          </div>
+          <button type="submit" [disabled]="!form.form.valid" *ngIf="productInfo?.productStatus == 0; else offBlock"
+                  class="btn btn-primary btn-lg"
+          >Add to Cart
+          </button>
+          <ng-template #offBlock><a class="btn btn-secondary btn-lg disabled">Unavailable</a></ng-template>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>-->
+<!-- row  datail -->
+
+
+<div id="wrapper">
+
+
+  <div *ngIf="currentUser.role === Role.PROVIDER"><app-menu-provider></app-menu-provider></div>
+  <div *ngIf="currentUser.role === Role.ADMIN"><app-menu-dash></app-menu-dash></div>
+
+  <!-- Content Wrapper -->
+  <div id="content-wrapper" class="d-flex flex-column">
+    <div id="content">
+      <app-topbar></app-topbar>
+      <!-- Begin Page Content -->
+      <div class="container-fluid">
+
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="h3 mb-0 text-gray-800"> Détail du produit</h1>
+        </div>
+
+      <div class="row">
+        <div class="col-10">
+          <div class="product-info">
+            <div class="tab-pane fade show active" id="man" role="tabpanel">
+              <div class="tab-single">
+                <div class="row">
+                  <div *ngFor="let image of retrievedImagee ;let i= index"  class="col-xl-3 col-lg-4 col-md-4 col-12 ">
+                    <div class="card">
+                      <div class="embed-responsive embed-responsive-16by9">
+                        <img class="card-img-top embed-responsive-item " [src]="image" alt="Second slide">
+                      </div>
+                      <div class="card-block"><br>
+                        <h4 class="card-title"> {{productInfo?.pr_images[i]?.name}}</h4>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+
+        <div class="col-lg-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+      </div>
+      <!-- /.panel-heading -->
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered table-hover">
+            <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Référence</th>
+              <th>Marque</th>
+              <th>Catégorie</th>
+              <th *ngIf="currentUser.role==Role.ADMIN">Fournisseur</th>
+              <th *ngIf="currentUser.role==Role.ADMIN">Contact</th>
+              <th>Nombre de vue</th>
+              <th>Nombre d'ajout au liste des voeux </th>
+              <th  *ngIf="currentUser.role==Role.ADMIN">Bloquer</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>{{productInfo?.name}}</td>
+              <td>{{productInfo?.reference}}</td>
+              <td>{{productInfo?.marque}}</td>
+              <td>{{productInfo?.speciality.name}}</td>
+              <td *ngIf="currentUser.role==Role.ADMIN">{{productInfo?.provider.lastname}} , {{productInfo?.provider.firstname}}</td>
+              <td *ngIf="currentUser.role==Role.ADMIN">Email :{{productInfo?.provider.email}} </td>
+              <td>{{productInfo?.nombreVue}}</td>
+              <td>{{productInfo?.nombrewish}}</td>
+              <td  *ngIf="currentUser.role==Role.ADMIN">
+                <button *ngIf="productInfo?.blocked===true" class="btn btn-success btn-sm" (click)="activprod(productInfo?.blocked,productInfo?.id)"
+                        data-toggle="modal"  data-target="#actionproModal">Activer</button>
+                <button *ngIf="productInfo?.blocked===false" class="btn btn-danger btn-sm" (click)="desactiveprod(productInfo?.blocked,productInfo?.id)"
+                        data-toggle="modal"  data-target="#actionproModal">bloquer</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        BROCHURE    :<p> {{productInfo?.catalogue}}</p>
+        DESCRIPTION :<p> {{productInfo?.description}}</p>
+
+        <h3> AVIS DES CLIENTS </h3>
+        <!-- /.table-responsive -->
+        <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover">
+          <thead>
+          <tr>
+            <th>Numero</th>
+            <th>Nom</th>
+            <th>Objet</th>
+            <th>Message</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="  let complaint of productInfo?.complaint ; let i = index">
+           <td>{{i+1}}</td> <td>{{complaint?.name}}</td><td>{{complaint?.objet}}</td><td>{{complaint?.message}}</td></tr>
+          </tbody>
+        </table>
+      </div>
+      </div>
+      <!-- /.panel-body -->
+    </div>
+    <!-- /.panel -->
+  </div>
+</div>
+
+</div>
+
+      <div class="modal fade" id="actionproModal" tabindex="-1" role="dialog" aria-labelledby="example" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampl">Activer/Désactiver</h5>
+              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">Voulez-vous realiser cette action ?</div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+              <a class="btn btn-outline-warning"  [routerLink]="['/liste-product']" (click)="actionpro()">Oui</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<app-footer-dash></app-footer-dash>
+</div>
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- /.row -->
+<!--<div id="wrapper">
+
+  <div *ngIf="currentUser.role === Role.PROVIDER"><app-menu-provider></app-menu-provider></div>
+  <div *ngIf="currentUser.role === Role.ADMIN"><app-menu-dash></app-menu-dash></div>
+
+  &lt;!&ndash; Content Wrapper &ndash;&gt;
+  <div id="content-wrapper" class="d-flex flex-column">
+    <div id="content">
+      <app-topbar></app-topbar>
+      &lt;!&ndash; Begin Page Content &ndash;&gt;
+      <div class="container-fluid">
+
+        &lt;!&ndash; Page Heading &ndash;&gt;
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="h3 mb-0 text-gray-800">Détail du produit</h1>
+        </div>
+
+
+&lt;!&ndash; Product Shop Section Begin &ndash;&gt;
+<section class="product-shop spad page-details">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-9">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="product-pic-zoom">
+             &lt;!&ndash; <img class="product-big-img" [src]="productInfo.images[1]" alt="">&ndash;&gt;
+              <div class="zoom-icon">
+                <i class="fa fa-search-plus"></i>
+              </div>
+            </div>
+
+            <div class="product-thumbs">
+              <div *ngFor="let image of productInfo.images" class="product-thumbs-track ps-slider owl-carousel">
+             &lt;!&ndash;   <div class="pt active" data-imgbigurl="img/product-single/product-1.jpg"><img
+                  src="img/product-single/product-1.jpg" alt=""></div>&ndash;&gt;
+                <div class="pt"><img alt="" height="100px" [src]="image"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="product-details">
+              <div class="pd-title">
+                <span>produit</span>
+                <h3>{{productInfo.name}}</h3>
+                <button  *ngIf="currentUser.role==Role.ADMIN">Bloquer</button>
+              </div>
+              <div class="pd-desc">
+                <p>{{productInfo.description}}</p>
+                <div class="pd-color">
+                  <h6>MARQUE :</h6></div> <h4>{{productInfo.marque}}</h4>
+              </div>
+              <div class="pd-color">
+                <h6>REFERENCE :</h6>
+                <div class="pd-desc">
+                  <p>{{productInfo.reference}}</p>
+                  </div>
+                </div>
+              </div>
+              <ul class="pd-tags">
+                <li><span>CATEGORIES</span>:{{productInfo.speciality.name}} </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="product-tab">
+          <div class="tab-item">
+            <ul class="nav" role="tablist">
+              <li>
+                <a class="active" data-toggle="tab" href="#tab-1" role="tab">DESCRIPTION</a>
+              </li>
+              <li>
+                <a data-toggle="tab" href="#tab-2" role="tab">BROCHURE</a>
+              </li>
+              <li>
+                <a data-toggle="tab" href="#tab-3" role="tab">
+                  AVIS DES CLIENTS </a>
+              </li>
+            </ul>
+          </div>
+          <div class="tab-item-content">
+            <div class="tab-content">
+              <div class="tab-pane fade-in active" id="tab-1" role="tabpanel">
+                <div class="product-content">
+                  <div class="row">
+                    <div class="col-lg-7">
+                      <h5>Caractéristiques</h5>
+                      <p>
+                        Nombre d'ajout au liste des voeux : {{productInfo.nombrewish}}<br>
+                        Nombre de vue : {{productInfo.NumberVue}}<br>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="tab-2" role="tabpanel">
+                <div class="specification-table">
+                  <p> {{productInfo.catalogue}}</p>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="tab-3" role="tabpanel">
+                <div class="customer-review-option">
+                  <h4>Les commentaires</h4>
+                  <div class="comment-option">
+               <div *ngFor=" complaint of productInfo.complaint">
+                    <div class="co-item">
+                      <div class="avatar-pic">
+                        <i class="fa fa-user-circle-o fa-1x" aria-hidden="true"></i>
+                      </div>
+                        <h5>{{complaint.name}}<span> -&#45;&#45;{{complaint.objet}}</span></h5>
+                        <div class="at-reply">{{complaint.message}}</div>
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+&lt;!&ndash; Product Shop Section End &ndash;&gt;
+
+
+      </div>
+    </div>
+    <app-footer-dash></app-footer-dash>
+  </div>
+</div>-->
+

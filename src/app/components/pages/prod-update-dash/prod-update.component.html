@@ -1,0 +1,378 @@
+
+<div id="wrapper">
+
+  <div *ngIf="currentUser.role === Role.PROVIDER"><app-menu-provider></app-menu-provider></div>
+  <div *ngIf="currentUser.role === Role.ADMIN"><app-menu-dash></app-menu-dash></div>
+  <!-- Content Wrapper -->
+  <div id="content-wrapper" class="d-flex flex-column">
+    <div id="content">
+      <app-topbar></app-topbar>
+      <!-- Begin Page Content -->
+      <div class="container-fluid">
+
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="h3 mb-0 text-gray-800"> Détail du produit</h1>
+        </div>
+
+      <div class="row">
+ <!--
+        <div *ngFor="let image of retrievedImagee ;let i= index"  class="col-sm-6">
+          <img class="card-img-top" [src]="image" alt="Second slide">
+          <div class="card">
+            <div class="card-body">
+              <h1 class="card-title">{{image.name}}</h1>
+              <a data-target="#removeModal" class="btn btn-primary">Supprimer</a>
+              &lt;!&ndash; delete image Modal&ndash;&gt;
+              <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Supprimer Image</h5>
+                      <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">Voulez-vous supprimer l 'image :{{ productAdd.pr_images[i].name}}?</div>
+                    <div class="modal-footer">
+                      <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+                      <a class="btn btn-primary" (click)="remove(productAdd.pr_images[i].id)" >Supprimer</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              &lt;!&ndash; delete image Modal&ndash;&gt;
+            </div>
+          </div>
+        </div>-->
+<div class="col-12">
+    <div class="product-info">
+  <div class="tab-pane fade show active" id="man" role="tabpanel">
+    <div class="tab-single">
+      <div class="row">
+        <div *ngFor="let image of retrievedImagee ;let i= index"  class="col-xl-3 col-lg-4 col-md-4 col-12  ">
+          <div class="card">
+            <div class="embed-responsive embed-responsive-16by9">
+              <img class="card-img-top embed-responsive-item" [src]="image" alt="Second slide">
+            </div>
+            <div class="card-block">
+              <h4 class="card-title"> {{productAdd?.pr_images[i]?.name}}</h4>
+              <p class="card-text">   <a class="btn btn-primary" (click)="removeid(productAdd?.pr_images[i]?.id)"
+                                         data-toggle="modal"  data-target="#removeModal" >Supprimer</a>
+              <br></p>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+      </div>
+      </div>
+      </div>
+
+</div>
+
+        <br>
+        <hr class="sidebar-divider">
+        <br>
+        <div class="col-lg-6">
+          <!-- ADD product modal -->
+                <form #updateForm="ngForm" (ngSubmit)="updateproduct()"  >
+                  <div class="modal-body">
+                    <div class="form-group">
+                      <label for="Nameup">Nom du produit *</label>
+                      <input type="text" [(ngModel)]="productAdd.name" minlength="3"  class="form-control" id="Nameup"
+                             name="Nameup"   #Nameup="ngModel" >
+                      <div  *ngIf="Nameup.invalid && (Nameup.dirty ||Nameup.touched)">
+                        <div *ngIf="Nameup.errors.required">Le nom est erroné.</div>
+                        <div *ngIf="Nameup.errors.minlength">
+                          Le nom doit comporter au moins 3 caractères.
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="form-group">
+                      <label for="descriptionup">Description *</label>
+                      <input pattern="[A-Za-z]*" type="text" [(ngModel)]="productAdd.description"  minlength="3" class="form-control" id="descriptionup" name="description"  #description="ngModel">
+                      <div  *ngIf="description.invalid && (description.dirty ||description.touched)">
+                        <div *ngIf="description.errors.required">
+                          La description est erronée.
+                        </div>
+                        <div *ngIf="description.errors.minlength">
+                          La description doit comporter au moins 3 caractères.
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="referenceup">Référence *</label>
+                      <input  type="text" [(ngModel)]="productAdd.reference"  minlength="3" class="form-control" id="referenceup" name="reference" #reference="ngModel">
+                      <div  *ngIf="reference.invalid && (reference.dirty ||reference.touched)">
+                        <div *ngIf="reference.errors.required">
+                          La référence est erronée.
+                        </div>
+                        <div *ngIf="reference.errors.minlength">
+                          La référence doit comporter au moins 3 caractères.
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="markeup">marque *</label>
+                      <input  type="text" [(ngModel)]="productAdd.marque" class="form-control"  minlength="3" id="markeup" name="marke"  #marke="ngModel">
+                      <div  *ngIf="marke.invalid && (marke.dirty ||marke.touched)">
+                        <div *ngIf="marke.errors.required">
+                          La marque est erronée.
+                        </div>
+                        <div *ngIf="marke.errors.minlength">
+                          La référence doit comporter au moins 3 caractères.
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="specialityup">Catégorie *</label> (la catégorie du produit :{{productAdd?.speciality?.name}}.)
+                      <select class="custom-select custom-select-lg " id="specialityup" name="speciality"
+                              [(ngModel)]="productAdd.speciality">
+                        <option  [ngValue]="null" disabled>Selectionner la catégorie</option>
+                        <option *ngFor="let specialit of special" [ngValue]="specialit">{{specialit?.name}}</option>
+
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label>Brochure :</label>
+                      <a href="{{productAdd?.catalogue}}">{{productAdd?.catalogue}}</a>
+                    </div>
+                    <div class="form-group">
+                      <input  style="display:none" name="file"   type="file" accept=".pdf,.doc,.docx"   (change)="onFileChanged($event)" #fileInpu />
+                      <button class="btn btn-link btn-sm"  type="button" (click)="fileInpu.click()" >nouvelle brochure</button>
+                      <input  style="display:none" type="file"   name="imagee"  type="file" ng2FileSelect  [uploader]="uploaderr" #fileInput multiple/>
+                      <button type="button"  class="btn btn-link btn-sm" (click)="fileInput.click()"  >Ajouter images</button>
+                      <br>
+                      <div class="drop-zone">
+                        <div ng2FileDrop [uploader]="uploaderr" class="drop-zone">
+                        </div>
+                      </div>
+                      <table>
+                        <thead>
+                        <tr>
+                          <th width="90%">
+                          Nom du fichier
+                          </th>
+                          <th width="10%">
+                            Supprimer
+                          </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let item of uploaderr.queue">
+                          <th width="90%">
+                            {{item._file.name}}
+                          </th>
+                          <th class="text-center" width="10%">
+                            <i class="fa fa-dropbox" (click)="item.remove()">Supprimer</i>
+                          </th>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <!--        <img [src]="imgURL" height="200" *ngIf="imgURL">-->
+                    <!--  <div class="form-group">
+                          <label for="image">Images</label>
+                          <input type="file" [(ngModel)]="productAdd.images"
+                                 class="form-control"
+                                 id="image"
+                                 name="image"
+                                 placeholder="Choisir les images "
+                                 required #image="ngModel"
+                                 accept="image/*"
+                                 (change)="onFileChanged($event)" multiple>
+                          <div [hidden]="!image.pristine" class="alert alert-danger">L'image est obligatoire !!</div>
+                        </div>-->
+                  </div>
+
+                  <div class="modal-footer">
+
+                    <button type="submit" class="btn btn-success btn-lg"  >Enregistrer</button>
+                  </div>
+                </form>
+
+              </div>
+            </div>
+          </div>
+          <!-- end ADD product modal -->
+    <!-- /.panel -->
+
+      <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="example" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Supprimer Image</h5>
+              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">Voulez-vous supprimer cette image ?</div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+              <a class="btn btn-primary" (click)="remove()" >Supprimer</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<app-footer-dash></app-footer-dash>
+</div>
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- /.row -->
+<!--<div id="wrapper">
+
+  <div *ngIf="currentUser.role === Role.PROVIDER"><app-menu-provider></app-menu-provider></div>
+  <div *ngIf="currentUser.role === Role.ADMIN"><app-menu-dash></app-menu-dash></div>
+
+  &lt;!&ndash; Content Wrapper &ndash;&gt;
+  <div id="content-wrapper" class="d-flex flex-column">
+    <div id="content">
+      <app-topbar></app-topbar>
+      &lt;!&ndash; Begin Page Content &ndash;&gt;
+      <div class="container-fluid">
+
+        &lt;!&ndash; Page Heading &ndash;&gt;
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="h3 mb-0 text-gray-800">Détail du produit</h1>
+        </div>
+
+
+&lt;!&ndash; Product Shop Section Begin &ndash;&gt;
+<section class="product-shop spad page-details">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-9">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="product-pic-zoom">
+             &lt;!&ndash; <img class="product-big-img" [src]="productInfo.images[1]" alt="">&ndash;&gt;
+              <div class="zoom-icon">
+                <i class="fa fa-search-plus"></i>
+              </div>
+            </div>
+
+            <div class="product-thumbs">
+              <div *ngFor="let image of productInfo.images" class="product-thumbs-track ps-slider owl-carousel">
+             &lt;!&ndash;   <div class="pt active" data-imgbigurl="img/product-single/product-1.jpg"><img
+                  src="img/product-single/product-1.jpg" alt=""></div>&ndash;&gt;
+                <div class="pt"><img alt="" height="100px" [src]="image"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="product-details">
+              <div class="pd-title">
+                <span>produit</span>
+                <h3>{{productInfo.name}}</h3>
+                <button  *ngIf="currentUser.role==Role.ADMIN">Bloquer</button>
+              </div>
+              <div class="pd-desc">
+                <p>{{productInfo.description}}</p>
+                <div class="pd-color">
+                  <h6>MARQUE :</h6></div> <h4>{{productInfo.marque}}</h4>
+              </div>
+              <div class="pd-color">
+                <h6>REFERENCE :</h6>
+                <div class="pd-desc">
+                  <p>{{productInfo.reference}}</p>
+                  </div>
+                </div>
+              </div>
+              <ul class="pd-tags">
+                <li><span>CATEGORIES</span>:{{productInfo.speciality.name}} </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="product-tab">
+          <div class="tab-item">
+            <ul class="nav" role="tablist">
+              <li>
+                <a class="active" data-toggle="tab" href="#tab-1" role="tab">DESCRIPTION</a>
+              </li>
+              <li>
+                <a data-toggle="tab" href="#tab-2" role="tab">BROCHURE</a>
+              </li>
+              <li>
+                <a data-toggle="tab" href="#tab-3" role="tab">
+                  AVIS DES CLIENTS </a>
+              </li>
+            </ul>
+          </div>
+          <div class="tab-item-content">
+            <div class="tab-content">
+              <div class="tab-pane fade-in active" id="tab-1" role="tabpanel">
+                <div class="product-content">
+                  <div class="row">
+                    <div class="col-lg-7">
+                      <h5>Caractéristiques</h5>
+                      <p>
+                        Nombre d'ajout au liste des voeux : {{productInfo.nombrewish}}<br>
+                        Nombre de vue : {{productInfo.NumberVue}}<br>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="tab-2" role="tabpanel">
+                <div class="specification-table">
+                  <p> {{productInfo.catalogue}}</p>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="tab-3" role="tabpanel">
+                <div class="customer-review-option">
+                  <h4>Les commentaires</h4>
+                  <div class="comment-option">
+               <div *ngFor=" complaint of productInfo.complaint">
+                    <div class="co-item">
+                      <div class="avatar-pic">
+                        <i class="fa fa-user-circle-o fa-1x" aria-hidden="true"></i>
+                      </div>
+                        <h5>{{complaint.name}}<span> -&#45;&#45;{{complaint.objet}}</span></h5>
+                        <div class="at-reply">{{complaint.message}}</div>
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+&lt;!&ndash; Product Shop Section End &ndash;&gt;
+
+
+      </div>
+    </div>
+    <app-footer-dash></app-footer-dash>
+  </div>
+</div>-->
+

@@ -1,0 +1,385 @@
+
+<div id="wrapper">
+
+
+<div *ngIf="user.role === Role.PROVIDER"><app-menu-provider></app-menu-provider></div>
+
+  <!-- Content Wrapper -->
+  <div id="content-wrapper" class="d-flex flex-column">
+    <div id="content">
+     <app-topbar></app-topbar>
+      <!-- Begin Page Content -->
+      <div class="container-fluid">
+
+
+        <!-- Page Heading -->
+
+        <!-- DataTales Example -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="h3 mb-0 text-gray-800">Liste des devis </h1>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+              </div>
+              <!-- /.panel-heading -->
+              <div class="panel-body">
+                <div class="table-responsive">
+                  <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                    <thead>
+                    <tr>
+                      <th>Numéro</th>
+                      <th>Nom</th>
+                      <th>Prix</th>
+          <!--            <th *ngIf="user.role==Role.ADMIN">Nombre de docteurs</th>
+                      <th *ngIf="user.role==Role.ADMIN">Nombre de fournisseurs</th>-->
+                      <th  *ngIf="user.role==Role.ADMIN">Bloquer</th>
+                      <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                      <th>Numéro</th>
+                      <th>Nom</th>
+                      <th>Prix</th>
+                      <!--            <th *ngIf="user.role==Role.ADMIN">Nombre de docteurs</th>
+                                  <th *ngIf="user.role==Role.ADMIN">Nombre de fournisseurs</th>-->
+                      <th  *ngIf="user.role==Role.ADMIN">Bloquer</th>
+                      <th>Action</th>
+                    </tr>
+                    </tfoot>
+                    <tbody>   <tr class="odd gradeX"*ngFor="let specialit of special ; let i= index">
+                         <td>{{i+1}}</td>
+                      <td>{{specialit.name}}</td>
+                      <td>{{specialit.priceSpeciality}}</td>
+                      <td *ngIf="user.role==Role.ADMIN">{{specialit.status}}</td>
+                      <td>
+                         <a [routerLink]="['/dashboard/edit-speciality',specialit.id]">Editer </a>
+                       <!-- <a style="display: block"  (click)="detailpr(productInfo.id)">Editer</a>-->
+                        <!--         <a style="display: block" routerLink="/product/edit" > Editer
+                                </a>-->
+                        <a  *ngIf="user.role == Role.ADMIN" style="display: block" data-toggle="modal"
+                            data-target="#updatespeciality" (click)="Onclick(specialit.id)" routerLink="./"> Modifier</a>
+                        <!--               <input hidden  type="text" productAdd=productInfo-->
+                        <a style="display: block"
+                           (click)="remove(specialit.id)" routerLink="./">Supprimer</a>
+
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+          </div>
+          <!-- /.col-lg-12 -->
+
+        </div>
+</div>
+
+
+    <app-footer-dash></app-footer-dash>
+</div>
+</div>
+</div>
+<!-- Add speciality modal -->
+
+<div class="modal" id="updatespeciality" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabe" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabe">Modifier spécialité :</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <form #upform="ngForm" (ngSubmit)="updatespeciality()">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="nam">Nom * </label>
+            <input [(ngModel)]="speciality.name" type="text" class="form-control form-control-lg"
+                   id="nam" name="name" #name="ngModel" required >
+            <div  *ngIf="name.invalid && (name.dirty ||name.touched)">
+              <div *ngIf="name.errors.required">
+                Le nom est erroné.
+              </div>
+              <div *ngIf="name.errors.minlength">
+                Le nom doit comporter au moins 3 caractères.
+              </div>
+            </div>
+
+          </div>
+          <div class="form-group">
+            <label for="priceSpe">Prix de spécialité *</label>
+            <input  pattern="[0-9]*" [(ngModel)]="speciality.priceSpeciality" type="text" class="form-control form-control-lg"
+                    id="priceSpe" name="priceSpeciality"     #priceSpeciality="ngModel" >
+            <div  *ngIf="priceSpeciality.invalid && (priceSpeciality.dirty ||priceSpeciality.touched)">
+              <div *ngIf="priceSpeciality.errors.required">
+                Le prix  est requis.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="t">
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            -<strong> La modification  </strong>est bien faite.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-lg btn-danger " data-dismiss="modal" >Annuler</button>
+          <button type="submit" class="btn  btn-success btn-lg"
+                  [disabled]="!upform.form.valid" >Enregistrer</button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<!-- End Add speciality modal -->
+
+
+
+<!-- /.row -->
+<!--<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        DataTables Advanced Tables
+      </div>
+      &lt;!&ndash; /.panel-heading &ndash;&gt;
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+            <thead>
+            <tr>
+              <th>Rendering engine</th>
+              <th>Browser</th>
+              <th>Platform(s)</th>
+              <th>Engine version</th>
+              <th>CSS grade</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="odd gradeX">
+              <td>Trident</td>
+              <td>Internet Explorer 4.0</td>
+              <td>Win 95+</td>
+              <td class="center">4</td>
+              <td class="center">X</td>
+            </tr>
+            <tr class="even gradeC">
+              <td>Trident</td>
+              <td>Internet Explorer 5.0</td>
+              <td>Win 95+</td>
+              <td class="center">5</td>
+              <td class="center">C</td>
+            </tr>
+            <tr class="odd gradeA">
+              <td>Trident</td>
+              <td>Internet Explorer 5.5</td>
+              <td>Win 95+</td>
+              <td class="center">5.5</td>
+              <td class="center">A</td>
+            </tr>
+            <tr class="even gradeA">
+              <td>Trident</td>
+              <td>Internet Explorer 6</td>
+              <td>Win 98+</td>
+              <td class="center">6</td>
+              <td class="center">A</td>
+            </tr>
+            <tr class="odd gradeA">
+              <td>Trident</td>
+              <td>Internet Explorer 7</td>
+              <td>Win XP SP2+</td>
+              <td class="center">7</td>
+              <td class="center">A</td>
+            </tr>
+            <tr class="even gradeA">
+              <td>Trident</td>
+              <td>AOL browser (AOL desktop)</td>
+              <td>Win XP</td>
+              <td class="center">6</td>
+              <td class="center">A</td>
+            </tr>
+            <tr class="gradeU">
+              <td>Other browsers</td>
+              <td>All others</td>
+              <td>-</td>
+              <td class="center">-</td>
+              <td class="center">U</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        &lt;!&ndash; /.table-responsive &ndash;&gt;
+        <div class="well">
+          <h4>DataTables Usage Information</h4>
+          <p>DataTables is a very flexible, advanced tables plugin for jQuery. In SB Admin, we are using a specialized version of DataTables built for Bootstrap 3. We have also customized the table headings to use Font Awesome icons in place of images. For complete documentation on DataTables, visit their website at <a target="_blank" href="https://datatables.net/">https://datatables.net/</a>.</p>
+          <a class="btn btn-default btn-lg btn-block" target="_blank" href="https://datatables.net/">View DataTables Documentation</a>
+        </div>
+      </div>
+      &lt;!&ndash; /.panel-body &ndash;&gt;
+    </div>
+    &lt;!&ndash; /.panel &ndash;&gt;
+  </div>
+  &lt;!&ndash; /.col-lg-12 &ndash;&gt;
+</div>-->
+<!-- /.row -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     <!--
+     <div class="modal" id="updatpdModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+       <div class="modal-dialog" role="document">
+         <div class="modal-content">
+           <div class="modal-header">
+             <h5 class="modal-title" id="exampleModalLabel1">Ajouter produit</h5>
+             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">×</span>
+             </button>
+           </div>
+           <form #updatepdForm="ngForm" (ngSubmit)="uploadSubmit()"  >
+
+             <div class="modal-body">
+
+               <div class="form-group">
+                 <label for="Name">Nom du produit *</label>
+                 <input type="text" [(ngModel)]="productAdd.name" class="form-control" id="Name" name="name" placeholder="Enter le nom du produit" required #Name="ngModel" >
+                 <div  *ngIf="Name.invalid && (Name.dirty ||Name.touched)">
+                   <div *ngIf="Name.errors.required">Le nom est erroné.</div>
+                   <div *ngIf="Name.errors.minlength">
+                     Le nom doit comporter au moins 3 caractères.
+                   </div>
+                 </div>
+
+               </div>
+               <div class="form-group">
+                 <label for="description">Description *</label>
+                 <input pattern="[A-Za-z]*" type="text" [(ngModel)]="productAdd.description" class="form-control" id="description" name="description" placeholder="Enter la description" required #description="ngModel">
+                 <div  *ngIf="description.invalid && (Name.dirty ||Name.touched)">
+                   <div *ngIf="description.errors.required">
+                     La description est erronée.
+                   </div>
+                   <div *ngIf="description.errors.minlength">
+                     La description doit comporter au moins 3 caractères.
+                   </div>
+                 </div>
+               </div>
+               <div class="form-group">
+                 <label for="reference">Référence *</label>
+                 <input  type="text" [(ngModel)]="productAdd.reference" class="form-control" id="reference" name="reference" placeholder="Enter la référence" required #reference="ngModel">
+                 <div  *ngIf="reference.invalid && (reference.dirty ||reference.touched)">
+                   <div *ngIf="reference.errors.required">
+                     La référence est erronée.
+                   </div>
+                   <div *ngIf="reference.errors.minlength">
+                     La référence doit comporter au moins 3 caractères.
+                   </div>
+                 </div>
+               </div>
+               <div class="form-group">
+                 <label for="marke">marque *</label>
+                 <input  type="text" [(ngModel)]="productAdd.marque" class="form-control" id="marke" name="marke" placeholder="Enter la marque" required #marke="ngModel">
+                 <div  *ngIf="marke.invalid && (marke.dirty ||marke.touched)">
+                   <div *ngIf="marke.errors.required">
+                     La marque est erronée.
+                   </div>
+                   <div *ngIf="reference.errors.minlength">
+                     La référence doit comporter au moins 3 caractères.
+                   </div>
+                 </div>
+               </div>
+               <div class="form-group">
+                 <label for="speciality">Catégorie *</label>
+                 <select class="custom-select custom-select-lg " id="speciality" name="speciality"
+                         [(ngModel)]="productAdd.speciality"
+                         required>
+                   <option  [ngValue]="null" disabled>Selectionner la catégorie</option>
+                   <option *ngFor="let specialit of speciality" [ngValue]="specialit">{{specialit.name}}</option>
+
+                 </select>
+               </div>
+               <div class="form-group">
+                 <input  style="display:none" name="file"   type="file" accept=".pdf,.doc,.docx"   (change)="onFileChanged($event)" #fileInpu /><br/>
+                 <button type="button" (click)="fileInpu.click()"  >upload file</button>
+               </div>
+               <div class="form-group">
+                 <input  style="display:none" type="file"   name="imagee"  type="file" ng2FileSelect [(ngModel)]="productAdd.images"   [uploader]="uploader" #fileInput multiple/><br/>
+                 <button type="button" (click)="fileInput.click()"  >upload images</button>
+                 <br>
+                 <div class="drop-zone">
+                   <div ng2FileDrop [uploader]="uploader" class="drop-zone">
+                     Drag and drop files to upload
+                   </div>
+                 </div>
+                 <table>
+                   <thead>
+                   <tr>
+                     <th width="90%">
+                       File Name
+                     </th>
+                     <th width="10%">
+                       Remove
+                     </th>
+                   </tr>
+                   </thead>
+                   <tbody>
+                   <tr *ngFor="let item of uploader.queue">
+                     <th width="90%">
+                       (NaN MB)
+                     </th>
+                     <th class="text-center" width="10%">
+                       <mat-icon (click)="item.remove()">delete</mat-icon>
+                     </th>
+                   </tr>
+                   </tbody>
+                 </table>
+               </div>
+               &lt;!&ndash;        <img [src]="imgURL" height="200" *ngIf="imgURL">&ndash;&gt;
+               &lt;!&ndash;  <div class="form-group">
+                     <label for="image">Images</label>
+                     <input type="file" [(ngModel)]="productAdd.images"
+                            class="form-control"
+                            id="image"
+                            name="image"
+                            placeholder="Choisir les images "
+                            required #image="ngModel"
+                            accept="image/*"
+                            (change)="onFileChanged($event)" multiple>
+                     <div [hidden]="!image.pristine" class="alert alert-danger">L'image est obligatoire !!</div>
+                   </div>&ndash;&gt;
+             </div>
+
+             <div class="modal-footer">
+               <button type="button" class="btn btn-lg btn-danger " data-dismiss="modal" >Annuler</button>
+               <button type="submit" class="btn btn-success btn-lg" [disabled]="!updatepdForm.form.valid"  >Enregistrer</button>
+             </div>
+           </form>
+
+         </div>
+       </div>
+     </div>
+     -->

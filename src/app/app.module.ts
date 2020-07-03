@@ -1,30 +1,52 @@
  import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
-
 import {AppComponent} from './app.component';
 import {RouterModule, Routes} from "@angular/router";
-import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
+// import {HttpInterceptorService} from "./httpInterceptor.service";
+ import {NgModule} from "@angular/core";
+ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+ import {JwtInterceptor} from "./components/_interceptors/jwt-interceptor.service";
+ import {ErrorInterceptor} from "./components/_interceptors/error-interceptor.service";
+ import {CookieService} from "ngx-cookie-service";
+ import {SiteclientModule} from "./components/pages/siteclient/siteclient.module";
+ import {CommonModule} from "@angular/common";
+
+
 
 const appRoutes: Routes = [{
-  path: 'site',
-  loadChildren: () => import('src/app/components/site.module').then(m => m.SiteModule)
+  path: '',
+  loadChildren: () => import('src/app/components/pages/site.module').then(m => m.SiteModule)
 },
-  {
-    path: '**',
+/* {
+    path: ' ',
     redirectTo :'site/dashboard'
-  }];
+  }*/
+  ];
 
 @NgModule({
   declarations: [
     AppComponent,
+
+
+   // ReactiveFormsModule
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     RouterModule.forRoot(appRoutes),
     HttpClientModule,
+    FormsModule,
+    SiteclientModule,
+
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+
+     /* provide: HTTP_INTERCEPTORS,
+      useClass: HttpInterceptorService,
+      multi: true*/
+      providers: [CookieService,
+        {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+        {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}],
+      bootstrap: [AppComponent]
 })
 export class AppModule {
 }
