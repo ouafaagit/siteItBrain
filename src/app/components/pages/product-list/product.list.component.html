@@ -2,7 +2,8 @@
 <div id="wrapper">
 
 
-<div *ngIf="user.role === Role.PROVIDER"><app-menu-provider></app-menu-provider></div>
+<div *ngIf="currentUser.role === Role.PROVIDER"><app-menu-provider></app-menu-provider></div>
+<div *ngIf="currentUser.role === Role.ADMIN"><app-menu-dash></app-menu-dash></div>
 
   <!-- Content Wrapper -->
   <div id="content-wrapper" class="d-flex flex-column">
@@ -14,14 +15,121 @@
 
         <!-- Page Heading -->
 
+<!--<h1 align="center" class="display-4 "> Products</h1>-->
+<!--<table id="table" class="table table-striped text-center" style="width:100%;">
+    <thead>
+    <tr>
+        <th scope="col">Photo</th>
+        <th scope="col">Nom</th>
+        <th scope="col">Référence</th>
+        <th scope="col">Marque</th>
+        <th scope="col">Catégorie</th>
+        <th  *ngIf="currentUser.role==Role.ADMIN" scope="col">Bloquer</th>
+        <th scope="col">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let productInfo of products">
+      <input hidden  type="text"
+             (change)="getImage(productInfo.images)">
+        <th class="align-middle" scope="row">
+         &lt;!&ndash;<img height="100px" src="{{productInfo.productIcon}}" alt="{{productInfo.productName}}">&ndash;&gt;
+              <div *ngIf=retrievedImage>
+                <img height="100px" [src]="retrievedImage">
+              </div>
+
+        </th>
+        <td class="align-middle">{{productInfo.name}}</td>
+        <td class="align-middle">{{productInfo.reference}}</td>
+      <td class="align-middle">{{productInfo.marque}}</td>
+      <td class="align-middle">{{productInfo.speciality.name}}</td>
+        <td  *ngIf="currentUser.role==Role.ADMIN"  class="align-middle">{{productInfo.blocked}}</td>
+        <td class="align-middle">
+             <a [routerLink]="['/product',productInfo.id]">Editer </a>
+      &lt;!&ndash;  <a style="display: block"  routerLink="/product/{{productInfo.id}}">
+                       <a style="display: block" routerLink="/product/edit" > Editer
+                       </a>&ndash;&gt;
+
+               <a  *ngIf="currentUser.role == Role.PROVIDER" style="display: block" data-toggle="modal"
+                   data-target="#exampleModal" >Modifier</a>
+  &lt;!&ndash;               <input hidden  type="text" productAdd=productInfo&ndash;&gt;>
+                 <a *ngIf="currentUser.role == Role.PROVIDER" style="display: block"
+                    (click)="remove(productInfo.id)" routerLink="./">Supprimer</a>
+        </td>
+    </tr>
+
+         </tbody>
+     </table>-->
+
         <!-- DataTales Example -->
+     <!--   <div class="card shadow mb-4">
+          <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="100">
+                <thead>
+                <tr>
+                  <th>Photo</th>
+                  <th >Nom</th>
+                  <th>Référence</th>
+                  <th>Marque</th>
+                  <th>Catégorie</th>
+                  <th  *ngIf="currentUser.role==Role.ADMIN">Bloquer</th>
+                  <th >Action</th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                  <th>Photo</th>
+                  <th>Nom</th>
+                  <th>Référence</th>
+                  <th>Marque</th>
+                  <th>Catégorie</th>
+                  <th  *ngIf="currentUser.role==Role.ADMIN">Bloquer</th>
+                  <th>Action</th>
+                </tr>
+                </tfoot>
+                <tbody>
+                <tr *ngFor="let productInfo of products">
+                 <input hidden  type="text" (change)="getImage(productInfo.images)">
+                  <td >
+                    &lt;!&ndash;<img height="100px" src="{{productInfo.productIcon}}" alt="{{productInfo.productName}}">&ndash;&gt;
+                    <div *ngFor="let image of productInfo.images" >   <img height="100px" [src]="image"> </div>
+
+                  </td>
+                  <td>{{productInfo.name}}</td>
+                  <td>{{productInfo.reference}}</td>
+                  <td>{{productInfo.marque}}</td>
+                  <td>{{productInfo.speciality.name}}</td>
+                  <td  *ngIf="currentUser.role==Role.ADMIN" >{{productInfo.blocked}}</td>
+                  <td>
+                   &lt;!&ndash; <a [routerLink]="['dashboard/edit-product',productInfo.id]">Editer </a>&ndash;&gt;
+                    <a style="display: block"  routerLink="dashboard/edit-product/{{productInfo.id}}">Editer</a>
+                             &lt;!&ndash;         <a style="display: block" routerLink="/product/edit" > Editer
+                                     </a>&ndash;&gt;
+                    <a  *ngIf="currentUser.role == Role.PROVIDER" style="display: block" data-toggle="modal"
+                        data-target="#exampleModal" >Modifier</a>
+                    &lt;!&ndash;               <input hidden  type="text" productAdd=productInfo&ndash;&gt;>
+                    <a *ngIf="currentUser.role == Role.PROVIDER" style="display: block"
+                       (click)="remove(productInfo.id)" routerLink="./">Supprimer</a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>-->
+        <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-          <h1 class="h3 mb-0 text-gray-800">Liste des devis </h1>
+          <h1 class="h3 mb-0 text-gray-800">Liste des produits</h1>
         </div>
         <div class="row">
-          <div class="col-lg-12">
+          <div class="col-lg-10">
             <div class="panel panel-default">
               <div class="panel-heading">
+
               </div>
               <!-- /.panel-heading -->
               <div class="panel-body">
@@ -30,41 +138,50 @@
                     <thead>
                     <tr>
                       <th>Numéro</th>
-                      <th>Nom</th>
-                      <th>Prix</th>
-          <!--            <th *ngIf="user.role==Role.ADMIN">Nombre de docteurs</th>
-                      <th *ngIf="user.role==Role.ADMIN">Nombre de fournisseurs</th>-->
-                      <th  *ngIf="user.role==Role.ADMIN">Bloquer</th>
-                      <th>Action</th>
+                      <th>Photo</th>
+                      <th >Nom</th>
+                      <th>Référence</th>
+                      <th>Marque</th>
+                      <th>Catégorie</th>
+                      <th  *ngIf="currentUser.role==Role.ADMIN">Bloquer</th>
+                      <th >Action</th>
                     </tr>
                     </thead>
                     <tfoot>
                     <tr>
                       <th>Numéro</th>
+                      <th>Photo</th>
                       <th>Nom</th>
-                      <th>Prix</th>
-                      <!--            <th *ngIf="user.role==Role.ADMIN">Nombre de docteurs</th>
-                                  <th *ngIf="user.role==Role.ADMIN">Nombre de fournisseurs</th>-->
-                      <th  *ngIf="user.role==Role.ADMIN">Bloquer</th>
+                      <th>Référence</th>
+                      <th>Marque</th>
+                      <th>Catégorie</th>
+                      <th  *ngIf="currentUser.role==Role.ADMIN">Bloquer</th>
                       <th>Action</th>
                     </tr>
                     </tfoot>
-                    <tbody>   <tr class="odd gradeX"*ngFor="let specialit of special ; let i= index">
-                         <td>{{i+1}}</td>
-                      <td>{{specialit.name}}</td>
-                      <td>{{specialit.priceSpeciality}}</td>
-                      <td *ngIf="user.role==Role.ADMIN">{{specialit.status}}</td>
-                      <td>
-                         <a [routerLink]="['/dashboard/edit-speciality',specialit.id]">Editer </a>
-                       <!-- <a style="display: block"  (click)="detailpr(productInfo.id)">Editer</a>-->
-                        <!--         <a style="display: block" routerLink="/product/edit" > Editer
-                                </a>-->
-                        <a  *ngIf="user.role == Role.ADMIN" style="display: block" data-toggle="modal"
-                            data-target="#updatespeciality" (click)="Onclick(specialit.id)" routerLink="./"> Modifier</a>
-                        <!--               <input hidden  type="text" productAdd=productInfo-->
-                        <a style="display: block"
-                           (click)="remove(specialit.id)" routerLink="./">Supprimer</a>
+                    <tbody>   <tr *ngFor="let productInfo of productsimg ;let i= index ">
+                      <td>{{i+1}}</td><td class="embed-responsive embed-responsive-16by9 ">
+                          <img *ngIf="productInfo.pr_images[0]" class="embed-responsive-item "  [src]="productInfo?.pr_images[0]?.picByte">
 
+                      </td>
+                      <td>{{productInfo?.name}}</td>
+                      <td>{{productInfo?.reference}}</td>
+                      <td>{{productInfo?.marque}}</td>
+                      <td>{{productInfo?.speciality.name}}</td>
+                      <td *ngIf="currentUser.role == Role.ADMIN" ><button *ngIf="productInfo?.blocked===true" class="btn btn-success btn-sm" (click)="activprod(productInfo?.blocked,productInfo?.id)"
+                                                                      data-toggle="modal"  data-target="#actionproModal">Activer</button>
+                      <button  *ngIf="productInfo?.blocked===false"class="btn btn-danger btn-sm" (click)="desactiveprod(productInfo?.blocked,productInfo?.id)"
+                                                                       data-toggle="modal"  data-target="#actionproModal">bloquer</button>
+                      </td>
+
+                      <td  class="btn-group-sm btn-group-toggle" data-toggle="buttons">
+                         <button name="options" id="option1" autocomplete="off" class="btn btn-outline-info "   [routerLink]="['/dashboard/edit-product',productInfo.id]">Editer </button>
+
+                        <button  *ngIf="currentUser.role == Role.PROVIDER" name="options" id="option2" autocomplete="off" class="btn btn-outline-success "
+                            [routerLink]="['/dashboard/update-product',productInfo.id]" >Modifier</button>
+                        <!--               <input hidden  type="text" productAdd=productInfo-->
+                        <button *ngIf="currentUser.role == Role.PROVIDER"  name="options" id="option3" autocomplete="off" class="btn btn-outline-danger "
+                           (click)="removeid(productInfo?.id)" data-toggle="modal"  data-target="#removeModal" routerLink="./">Supprimer</button>
                       </td>
                     </tr>
                     </tbody>
@@ -79,73 +196,47 @@
 
         </div>
 </div>
-
+      <app-pagination  [currentPage]="page" ></app-pagination>
+      <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="example" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Supprimer produit</h5>
+              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">Voulez-vous supprimer ce produit ?</div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+              <a class="btn btn-outline-danger" routerLink="./" (click)="remove()">Supprimer</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="actionproModal" tabindex="-1" role="dialog" aria-labelledby="example" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampl">Activer/Désactiver</h5>
+              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">Voulez-vous realiser cette action ?</div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+              <a class="btn btn-outline-warning"  routerLink="./" (click)="actionpro()">Oui</a>
+            </div>
+          </div>
+        </div>
+      </div>
 
     <app-footer-dash></app-footer-dash>
 </div>
 </div>
+
 </div>
-<!-- Add speciality modal -->
-
-<div class="modal" id="updatespeciality" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabe" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabe">Modifier spécialité :</h5>
-        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-      <form #upform="ngForm" (ngSubmit)="updatespeciality()">
-        <div class="modal-body">
-          <div class="form-group">
-            <label for="nam">Nom * </label>
-            <input [(ngModel)]="speciality.name" type="text" class="form-control form-control-lg"
-                   id="nam" name="name" #name="ngModel" required >
-            <div  *ngIf="name.invalid && (name.dirty ||name.touched)">
-              <div *ngIf="name.errors.required">
-                Le nom est erroné.
-              </div>
-              <div *ngIf="name.errors.minlength">
-                Le nom doit comporter au moins 3 caractères.
-              </div>
-            </div>
-
-          </div>
-          <div class="form-group">
-            <label for="priceSpe">Prix de spécialité *</label>
-            <input  pattern="[0-9]*" [(ngModel)]="speciality.priceSpeciality" type="text" class="form-control form-control-lg"
-                    id="priceSpe" name="priceSpeciality"     #priceSpeciality="ngModel" >
-            <div  *ngIf="priceSpeciality.invalid && (priceSpeciality.dirty ||priceSpeciality.touched)">
-              <div *ngIf="priceSpeciality.errors.required">
-                Le prix  est requis.
-              </div>
-            </div>
-          </div>
-        </div>
-        <div *ngIf="t">
-          <div class="alert alert-success alert-dismissible fade show" role="alert">
-            -<strong> La modification  </strong>est bien faite.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-lg btn-danger " data-dismiss="modal" >Annuler</button>
-          <button type="submit" class="btn  btn-success btn-lg"
-                  [disabled]="!upform.form.valid" >Enregistrer</button>
-        </div>
-      </form>
-    </div>
-
-  </div>
-</div>
-
-<!-- End Add speciality modal -->
-
-
-
 <!-- /.row -->
 <!--<div class="row">
   <div class="col-lg-12">

@@ -43,7 +43,7 @@
                     </tr>
                     </tfoot>
                     <tbody>
-                    <tr class="odd gradeX"*ngFor="let use of users ; let i= index">
+                    <tr class="odd gradeX"*ngFor="let use of page?.content ; let i= index">
                          <td>{{i+1}}</td>
                       <td>{{use?.firstname}}</td>
                       <td>{{use?.lastname}}</td>
@@ -60,9 +60,10 @@
             <!-- /.panel -->
           </div>
           <!-- /.col-lg-12 -->
-
+          <app-pagination  [currentPage]="page" ></app-pagination>
         </div>
 </div>
+
 
     <app-footer-dash></app-footer-dash>
 </div>

@@ -1,15 +1,16 @@
-<div class="col-md-12 column">
-  <ul class="pagination justify-content-end">
+
+<nav class="d-table-row">
+  <ul class="pagination">
       <li class="page-item" *ngIf="currentPage?.number > 0; else prev">
           <a
                   class="page-link"
                   [routerLink]="['./']"
                   [queryParams]="{ page: currentPage?.number, size: currentPage?.size }"
-          >Previous</a
+          >&laquo;</a
           >
     </li>
       <ng-template #prev>
-          <li class="page-item  disabled"><a class="page-link">Previous</a></li>
+          <li class="page-item  disabled"><a class="page-link">&laquo;</a></li>
       </ng-template>
 
       <ng-container *ngFor="let item of counter(currentPage?.totalPages); let i = index">
@@ -22,9 +23,7 @@
         </li>
           <ng-template #active>
               <li
-                      class="page-item active "
-
-              >
+                      class="page-item active ">
                   <button class="page-link " disabled>{{ i + 1 }}</button>
               </li>
           </ng-template>
@@ -41,11 +40,11 @@
           page: currentPage?.number + 2,
           size: currentPage?.size
         }"
-          >Next</a
+          >&raquo;</a
           >
     </li>
     <ng-template #next>
-        <li class="page-item disabled "><a class="page-link">Next</a></li>
+        <li class="page-item disabled "><a class="page-link">&raquo;</a></li>
     </ng-template>
   </ul>
-</div>
+</nav>

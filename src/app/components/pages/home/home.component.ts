@@ -6,6 +6,7 @@ import {CartService} from "../../services/cart.service";
 import {ProductInOrder} from "../../models/ProductInOrder";
 import {Cardproduct} from "../../models/cardproduct";
 import {WishlistService} from "../../services/wishlist.service";
+import {ImageModel} from "../../models/image.model";
 
 @Component({
   selector: 'app-home',
@@ -21,9 +22,11 @@ export class HomeComponent implements OnInit {
   logicielau:Cardproduct[]=[];
   tendancen:Cardproduct[]=[];
   prodmodal :product;
-
+  imgg: ImageModel;
   constructor(private wishlistService: WishlistService,private productService: ProductService ,private cartService: CartService) {
     this.prodmodal=new product({});
+    this.imgg=new ImageModel({});
+
   }
 
   ngOnInit(): void {
@@ -45,6 +48,8 @@ export class HomeComponent implements OnInit {
   {
     this.productService.quickview(id).subscribe(prod => {
       this.prodmodal = prod;
+     // this.img=new ImageModel({});
+      this.imgg =this.prodmodal.pr_images[0];
       console.log("quickview"+ this.prodmodal.nombreVue);});
 
   }

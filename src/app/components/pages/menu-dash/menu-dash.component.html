@@ -1,0 +1,210 @@
+<!-- Sidebar -->
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+  <!-- Sidebar - Brand -->
+  <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/dashboard">
+    <div class="sidebar-brand-icon rotate-n-15">
+      <i class="fas fa-laugh-wink"></i>
+    </div>
+    <div class="sidebar-brand-text mx-3">Dashboard </div>
+  </a>
+
+  <!-- Divider
+  <hr class="sidebar-divider my-0">
+-->
+  <!-- Nav Item - Dashboard -->
+<!-- <li class="nav-item active">
+    <a class="nav-link" href="/dashboard">
+      <i class="fas fa-fw fa-tachometer-alt"></i>
+      <span>Dashboard</span></a>
+       &lt;!&ndash; Divider &ndash;&gt;
+  <hr class="sidebar-divider">
+  </li>-->
+<br>
+  <hr class="sidebar-divider">
+  <!-- Heading -->
+  <div class="sidebar-heading">
+    Interface
+  </div>
+  <!-- Nav Item -Les spécialités Collapse Menu -->
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapspecialite" aria-expanded="true" aria-controls="collapseUtilities">
+      <i class="fas fa-fw fa-wrench"></i>
+      <span>Spécialités</span>
+    </a>
+    <div id="collapspecialite" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">Gérer Spécialités:</h6>
+        <a class="collapse-item" (click)="Onclick()" data-toggle="modal" data-target="#addspeciality">Ajouter spécialité</a>
+        <a class="collapse-item" [routerLink]="['/liste-speciality']">liste de spécialités</a>
+      </div>
+    </div>
+  </li>
+  <!-- Nav Item  list produits  Collapse Menu -->
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+      <i class="fas fa-fw fa-cog"></i>
+      <span>Les produits</span>
+    </a>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">Gerer produits:</h6>
+        <a class="collapse-item" [routerLink]="['/liste-product']">liste des produits</a>
+
+      </div>
+    </div>
+  </li>
+  <!-- Divider -->
+  <hr class="sidebar-divider">
+  <!-- Nav Item -Les fournisseurs Collapse Menu -->
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#providers" aria-expanded="true" aria-controls="collapseUtilities">
+      <i class="fa fa-list-ul" aria-hidden="true"></i>
+      <span>Les fournisseurs</span>
+    </a>
+    <div id="providers" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">Gérer fournisseur:</h6>
+        <a class="collapse-item" [routerLink]="['/liste-new-providers']">Les demandes</a>
+        <a class="collapse-item" [routerLink]="['/liste-providers']">tout les fournisseurs</a>
+        <a class="collapse-item" [routerLink]="['/liste-blocked-providers']">Les fournisseurs bloqué</a>
+        <a class="collapse-item" [routerLink]="['/liste-notblocked-providers']">Les fournisseurs actifs</a>
+      </div>
+    </div>
+  </li>
+
+  <!-- Nav Item -Les docteurs Collapse Menu -->
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#doctors" aria-expanded="true" aria-controls="collapseUtilities">
+      <i class="fa fa-users" aria-hidden="true"></i>
+      <span>Les docteurs</span>
+    </a>
+    <div id="doctors" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">Gérer docteur:</h6>
+        <a class="collapse-item" [routerLink]="['/liste-doctors']">Les docteurs</a>
+      </div>
+    </div>
+  </li>
+
+  <!-- Nav Item -Les reclamations Collapse Menu -->
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#reclamations" aria-expanded="true" aria-controls="collapseUtilities">
+      <i class="fa fa-comments" aria-hidden="true"></i>
+      <span>Les reclamations</span>
+    </a>
+    <div id="reclamations" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">Gérer reclamation:</h6>
+        <a class="collapse-item" [routerLink]="['/liste-complaint']">Les reclamations</a>
+        <a class="collapse-item" [routerLink]="['/liste-contact']">Les avis des clients</a>
+      </div>
+    </div>
+  </li>
+  <!-- Divider -->
+  <hr class="sidebar-divider">
+  <!-- Heading -->
+  <div class="sidebar-heading">
+    Extensions
+  </div>
+  <!-- Nav Item - Charts -->
+  <li class="nav-item">
+    <a class="nav-link" [routerLink]="['/liste-contact']">
+      <i class="fas fa-fw fa-chart-area"></i>
+      <span>Les statistiques</span></a>
+  </li>
+  <!-- Divider -->
+  <hr class="sidebar-divider d-none d-md-block">
+  <!-- Sidebar Toggler (Sidebar)
+  <div class="text-center d-none d-md-inline">
+    <button class="rounded-circle border-0" id="sidebarToggle"></button>
+  </div>-->
+  <!-- Add speciality modal -->
+
+  <div class="modal" id="addspeciality" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabe" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabe">Ajouter spécialité :</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+
+        </div>
+        <form #spform="ngForm" (ngSubmit)="Addspeciality()">
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="name">Nom * </label>
+              <input [(ngModel)]="speciality.name" type="text" class="form-control form-control-lg"
+                                                   id="name" name="name" #name="ngModel" required >
+              <div  *ngIf="name.invalid && (name.dirty ||name.touched)">
+                <div *ngIf="name.errors.required">
+                  Le nom est erroné.
+                </div>
+                <div *ngIf="name.errors.minlength">
+                  Le nom doit comporter au moins 3 caractères.
+                </div>
+              </div>
+
+            </div>
+            <div class="form-group">
+              <label for="priceSpeciality">Prix de spécialité *</label>
+              <input  pattern="[0-9]*" [(ngModel)]="speciality.priceSpeciality" type="text" class="form-control form-control-lg"
+                      id="priceSpeciality" name="priceSpeciality"     #priceSpeciality="ngModel" >
+              <div  *ngIf="priceSpeciality.invalid && (priceSpeciality.dirty ||priceSpeciality.touched)">
+                <div *ngIf="priceSpeciality.errors.required">
+                  Le prix  est requis.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="t">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+              -<strong> L ' ajout </strong>est bien fait.
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-lg btn-danger " data-dismiss="modal" >Annuler</button>
+            <button type="submit" class="btn  btn-success btn-lg"
+              [disabled]="!spform.form.valid" (click)="Onclick()">Enregistrer</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- End Add speciality modal -->
+</ul>
+<!-- End of Sidebar -->
+
+
+
+
+
+  <!-- Nav Item - Pages Collapse Menu -->
+  <!--  <li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+        <i class="fas fa-fw fa-folder"></i>
+        <span>Pages</span>
+      </a>
+      <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+          <h6 class="collapse-header">Login Screens:</h6>
+          <a class="collapse-item" href="login.html">Login</a>
+          <a class="collapse-item" href="register.html">Register</a>
+          <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+          <div class="collapse-divider"></div>
+          <h6 class="collapse-header">Other Pages:</h6>
+          <a class="collapse-item" href="404.html">404 Page</a>
+          <a class="collapse-item" href="blank.html">Blank Page</a>
+        </div>
+      </div>
+    </li>-->
+
+
+
+

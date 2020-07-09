@@ -8,6 +8,8 @@ import {product} from "../../models/product.model";
 import {ProductInOrder} from "../../models/ProductInOrder";
 import {Cardproduct} from "../../models/cardproduct";
 import {WishlistService} from "../../services/wishlist.service";
+import {Subscription} from "rxjs";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-shop',
@@ -16,15 +18,19 @@ import {WishlistService} from "../../services/wishlist.service";
 })
 export class ShopGridComponent implements OnInit {
   specialities :Speciality[]=[];
-  products:Cardproduct[]=[];
+page:any;
   prodmodal :product;
   tendancen:Cardproduct[]=[];
-  constructor(private cartService: CartService,private wishlistService: WishlistService,
+  private paramSub: Subscription;
+  constructor(private cartService: CartService,private wishlistService: WishlistService,private route: ActivatedRoute,
               private productService: ProductService, private specialityService: SpecialityService) { }
 
   ngOnInit(): void {
     this.loadAllSpecialities();
     this.getProds();
+    this.paramSub = this.route.params.subscribe(() => {
+      this.update();
+    });
     this.tendancenew();
   }
 //////categories////
@@ -34,11 +40,24 @@ export class ShopGridComponent implements OnInit {
     });
   }
   ////all///
-  async getProds() {
+  ngOnDestroy(): void {
+    this.paramSub.unsubscribe();
+  }
 
-      this.productService.getAll()
+  update() {
+    if (this.route.snapshot.queryParamMap.get('page')) {
+      const currentPage = +this.route.snapshot.queryParamMap.get('page');
+      const size = +this.route.snapshot.queryParamMap.get('size');
+      this.getProds(currentPage, size);
+    } else {
+      this.getProds();
+    }
+  }
+  async getProds(page: number = 1, size: number = 18) {
+
+      this.productService.getAll(+page, +size)
         .subscribe(page => {
-          this.products = page;
+          this.page = page;
 
         });
 

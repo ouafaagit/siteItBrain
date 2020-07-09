@@ -2,11 +2,13 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable, Input} from '@angular/core';
 import {Router} from '@angular/router';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {doctor} from '../models/doctor.model';
 import {apiUrl, environment} from "../../../environments/environment";
 import {Speciality} from "../models/Speciality.model";
 import {Provider} from "../models/provider.model";
+import {catchError} from "rxjs/operators";
+import {product} from "../models/product.model";
 
 // @ts-ignore
 @Injectable({providedIn: 'root'})
@@ -29,8 +31,14 @@ export class DoctorService {
 
 ///////Admin//////////////
   ///all//
-  AllDoctorsAd(): any{
-    return this.http.get<Array<doctor>>(environment.SERVER_API_URL + '/api/admin/AllDoctors');
+  AllDoctorsAd(page: number, size: number): any{
+    const url = `${apiUrl}/api/admin/AllDoctors?page=${page}&size=${size}`;
+    return this.http.get(url).pipe(
+      catchError(e => {
+        console.log("AllDoctors//"+e);
+        return of(new product({}));
+      })
+    )
   }
 //////////////
 

@@ -1,0 +1,101 @@
+<app-header></app-header><!-- Register Section Begin -->
+<div class="register-login-section spad">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 offset-lg-3">
+        <div class="register-form">
+          <h2>S'inscrire</h2>
+          <form #form="ngForm" (ngSubmit)="onSubmit()" >
+            <div class="group-input">
+              <label for="firstname">Prénom *</label>
+              <input [(ngModel)]="user.firstname" type="text" class="form-control form-control-lg" id="firstname" name="firstname" placeholder="Entrer le prénom " required #firstname="ngModel">
+              <div class="alert alert-danger" *ngIf="firstname.invalid && (firstname.dirty ||firstname.touched)">
+                <div *ngIf="firstname.errors.required">
+                  Le prénom est erroné.
+                </div>
+                <div *ngIf="firstname.errors.minlength">
+                  Le prénom doit comporter au moins 3 caractères.
+                </div>
+              </div>
+            </div>
+            <div class="group-input">
+              <label for="lastname">Nom *</label>
+              <input [(ngModel)]="user.lastname" type="text" class="form-control form-control-lg" id="lastname" name="lastname" placeholder="Entrer le nom" required #lastname="ngModel">
+              <div class="alert alert-danger" *ngIf="lastname.invalid && (lastname.dirty ||lastname.touched)">
+                <div *ngIf="lastname.errors.required">
+                  Le nom est requis.
+                </div>
+                <div *ngIf="lastname.errors.minlength">
+                  Le nom doit comporter au moins 3 caractères.
+                </div>
+              </div>
+            </div>
+         <!--   <div class="group-input">
+              <label for="speciality">Spécialité *</label>
+              <input [(ngModel)]="user.speciality" type="text" class="form-control form-control-lg" id="speciality" name="speciality" placeholder="Entrer la spécialité" required #speciality="ngModel">
+              <div  *ngIf="speciality.invalid && (speciality.dirty ||speciality.touched)">
+                <div *ngIf="speciality.errors.required">
+                  La spécialité est requis.
+                </div>
+                <div *ngIf="speciality.errors.minlength">
+                  La spécialité doit comporter au moins 3 caractères.
+                </div>
+              </div>
+            </div>-->
+            <!--Category-->
+            <div class="form-group">
+              <label for="speciality">Spécialité *</label>
+              <select class="custom-select custom-select-lg " id="speciality" name="speciality"
+                      [(ngModel)]="user.speciality"
+                      required>
+                <option  [ngValue]="null" disabled>Selectionner votre spécialité</option>
+                <option *ngFor="let specialit of speciality" [ngValue]="specialit">{{specialit.name}}</option>
+
+              </select>
+            </div>
+            <div class="group-input">
+              <label for="phone">numéro de téléphone*</label>
+              <input [(ngModel)]="user.phone" type="text" class="form-control form-control-lg" id="phone" name="phone" placeholder="Entrer le numéro de téléphone" required #phone="ngModel" >
+              <div  *ngIf="phone.invalid && (phone.dirty ||phone.touched)">
+                <div *ngIf="phone.errors.required">
+                  numéro de téléphone est requis.
+                </div>
+              </div>
+            </div>
+            <div class="group-input">
+              <label for="email">Adresse email *</label>
+              <input [(ngModel)]="user.email" type="email" class="form-control form-control-lg" id="email" name="email" placeholder="Enter email" email required autofocus  #email="ngModel">
+              <div  *ngIf="email.invalid && (email.dirty ||email.touched)" >
+                <div *ngIf="email.errors.required" >
+                  Email est requis.
+                </div>
+                <div *ngIf="email.errors.email">
+                  Invalide Email.
+                </div>
+              </div>
+            </div>
+            <div class="group-input">
+              <label for="password">Mot de passe *</label>
+              <input  [(ngModel)]="user.password" type="password" class="form-control form-control-lg" id="password" name="password" placeholder="Entrer le mot de passe" minlength="6" required #password="ngModel">
+              <div  *ngIf="password.invalid && (password.dirty ||password.touched)">
+                <div *ngIf="password.errors.required">
+                  Password est requis.
+                </div>
+                <div *ngIf="password.errors.minlength">
+                  Le mot de passe doit comporter au moins 6 caractères.
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="site-btn register-btn" [disabled]="!form.form.valid">S'INSCRIRE</button>
+          </form>
+          <div class="switch-login">
+            <a href="/login" class="or-login">Ou connectez-vous</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Register Form Section End -->
+<app-footer></app-footer>

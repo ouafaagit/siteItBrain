@@ -17,8 +17,6 @@ import {AuthGuard} from "../../_guards/auth.guard";
 import {Role} from "../../enum/Role";
 //import {BrowserModule} from "@angular/platform-browser";
 import {MenuProviderComponent} from "../menu-provider/menu-provider.component";
-import {DashboardComponent} from "../dashboard/dashboard.component";
-import {DashboardfComponent} from "../dashboardf/dashboardf.component";
 import {MenuDashComponent} from "../menu-dash/menu-dash.component";
 import {ProductListComponent} from "../product-list/product.list.component";
 import {FooterDashComponent} from "../footer-dash/footer-dash.component";
@@ -44,6 +42,7 @@ import {ShopGridComponent} from "../shop-grid/shop-grid.component";
 import {NewProductsComponent} from "../new-products/new-products.component";
 import {SpecialityProductsComponent} from "../speciality-products/speciality-products.component";
 import {WishlistComponent} from "../wishlist/wishlist.component";
+import {PaginationComponent} from "../pagination/pagination.component";
 
 
 const routes : Routes = [
@@ -66,11 +65,10 @@ const routes : Routes = [
   { path: 'carte', component: CarteComponent },
   { path: 'wishlist', component: WishlistComponent },
   { path: 'All-products', component: ShopGridComponent },
-  { path: 'Speciality-products/:id', component: SpecialityProductsComponent },
+  //{ path: 'Speciality-products/:id', component: SpecialityProductsComponent },
+  { path: 'Speciality-products/:id', component: NewProductsComponent },
   { path: 'All-new-products', component: NewProductsComponent },
-  { path: 'dashboard', component: DashboardComponent ,
-    //canActivate: [AuthGuard], data: {roles: [ Role.ADMIN]}
-  },
+
   {
     path: 'liste-orders',
     component: OrderComponent,
@@ -81,9 +79,7 @@ const routes : Routes = [
     component: DetailOrderComponent,
     canActivate: [AuthGuard], data: {roles: [Role.PROVIDER]}
   },
-  { path: 'dashboard-fournisseur', component: DashboardfComponent,
-    // canActivate: [AuthGuard], data: {roles: [Role.PROVIDER]} ProviderListComponent
-  }, {
+ {
     path: 'liste-providers',
     component: ProviderListComponent,
     canActivate: [AuthGuard], data: {roles: [ Role.ADMIN]}
@@ -165,8 +161,6 @@ const routes : Routes = [
     DoctorListComponent,
     DetailProdComponent,
     ProdUpdateComponent,
-    DashboardComponent,
-    DashboardfComponent,
     MenuDashComponent,
     CheckoutComponent,
     SpecialityProductsComponent,
@@ -176,6 +170,7 @@ const routes : Routes = [
     DetailSpecialityComponent,
     FooterDashComponent,
     TopbarComponent,
+    PaginationComponent,
     MenuProviderComponent,
   ],
   exports: [

@@ -49,7 +49,7 @@
                     </tr>
                     </tfoot>
                     <tbody>
-                    <tr class="odd gradeX"*ngFor="let use of users ; let i= index">
+                    <tr class="odd gradeX"*ngFor="let use of page?.content ; let i= index">
                          <td>{{i+1}}</td>
                       <td>{{use?.firstname}}</td>
                       <td>{{use?.lastname}}</td>
@@ -76,7 +76,9 @@
           </div>
           <!-- /.col-lg-12 -->
 
+
         </div>
+        <app-pagination  [currentPage]="page" ></app-pagination>
 </div>
 
       <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="example" aria-hidden="true">

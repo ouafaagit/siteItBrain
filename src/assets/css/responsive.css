@@ -30,10 +30,7 @@ Version:1.0
 .breadcrumbs {
 	padding: 20px 0;
 }
-.blog-single.grid .pagination{
-	float:none;
-	text-align:center;
-}
+
 .header.shop .topbar .top-left{
 	text-align:center;
 }
@@ -355,11 +352,7 @@ Version:1.0
 .shop-services.section {
 	padding: 40px 0 0 0;
 }
-.blog-single.grid .pagination{
-	float:none;
-	text-align:center;
-	margin-top: 12px;
-}
+
 .site-header .header-bottom {
 	width: 100%;
 	z-index: 333;
@@ -922,16 +915,7 @@ Version:1.0
 	margin-bottom: 10px;
 	padding-bottom: 15px;
 }
-.pagination .pagination-list li a {
-	padding: 4px 12px;
-}
-.pagination .pagination-list li a {
-	padding: 4px 12px;
-}
-.shop-list .pagination{
-	float:none;
-	text-align:center;
-}
+
 .shop-list .list-content {
 	margin-top: 30px;
 }
@@ -1533,14 +1517,7 @@ Version:1.0
 	padding: 0px 20px;
 	width: 100%;
 }
-.pagination .pagination-list li a {
-	padding: 4px 12px;
-}
-.blog-single.grid .pagination{
-	float:none;
-	text-align:center;
-	margin-top: 12px;
-}
+
 .error-page .error-inner h2 {
 	font-size: 55px;
 }

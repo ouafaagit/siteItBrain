@@ -11,7 +11,7 @@
         <!-- DataTales Example -->
 
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-          <h1 class="h3 mb-0 text-gray-800">Liste des fournisseurs</h1>
+          <h1 class="h3 mb-0 text-gray-800">Liste des fournisseurs non bloqués</h1>
         </div>
         <div class="row">
           <div class="col-lg-10">
@@ -49,7 +49,7 @@
                     </tr>
                     </tfoot>
                     <tbody>
-                    <tr class="odd gradeX"*ngFor="let use of users ; let i= index">
+                    <tr class="odd gradeX"*ngFor="let use of page?.content ; let i= index">
                          <td>{{i+1}}</td>
                       <td>{{use?.firstname}}</td>
                       <td>{{use?.lastname}}</td>
@@ -76,8 +76,8 @@
             <!-- /.panel -->
           </div>
           <!-- /.col-lg-12 -->
-
         </div>
+        <app-pagination  [currentPage]="page" ></app-pagination>
 </div>
 
       <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="example" aria-hidden="true">

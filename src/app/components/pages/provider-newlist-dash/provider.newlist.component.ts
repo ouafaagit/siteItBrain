@@ -1,35 +1,27 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserService} from "../../services/user.service";
-import {ProductService} from "../../services/product.service";
-import {JwtResponse} from "../../response/JwtResponse";
-import {Subscription} from "rxjs";
+
 import {ActivatedRoute, Router} from "@angular/router";
 import {Role} from "../../enum/Role";
 import {ProviderService} from "../../services/providerService";
-import {product} from "../../models/product.model";
-import {ImageModel} from "../../models/image.model";
-import {first} from "rxjs/operators";
-import {SpecialityService} from "../../services/speciality.service";
-import {Speciality} from "../../models/Speciality.model";
-import {FileUploader} from "ng2-file-upload";
-import {CommonModule} from "@angular/common";
+
 import {Provider} from "../../models/provider.model";
-import {ProductInOrder} from "../../models/ProductInOrder";
-import {WishlistService} from "../../services/wishlist.service";
+import {Subscription} from "rxjs";
+
 @Component({
     selector: 'app-speciality.list',
     templateUrl: './provider.newlist.component.html',
     styleUrls: ['./provider.newlist.component.css']
 })
 export class ProviderNewlistComponent implements OnInit {
-  users: Provider[] = [];
   user = new Provider();
   Role = Role;
   userdel :number;
   status :number;
   idpro :number;
-
-  constructor(private userService: UserService,
+  page: any;
+  private querySub: Subscription;
+  constructor(private userService: UserService,private route: ActivatedRoute,
               private providerService: ProviderService,
               private router: Router) {
   }
@@ -39,7 +31,9 @@ export class ProviderNewlistComponent implements OnInit {
     this.providerService.get(account).subscribe(u => {
       this.user = u;
       if(this.user.role==Role.ADMIN){
-        this.AllProvidersAd();
+        this.querySub = this.route.queryParams.subscribe(() => {
+          this.update();
+        });
       }else {
         this.router.navigate(['/login']);
       }
@@ -49,14 +43,27 @@ export class ProviderNewlistComponent implements OnInit {
     });
 
   }
+  ngOnDestroy(): void {
+    this.querySub.unsubscribe();
+  }
 
-    AllProvidersAd() {
-    this.providerService.AllnewProvidersAd().subscribe(sp => {
-        this.users = sp;
+  update() {
+    if (this.route.snapshot.queryParamMap.get('page')) {
+      const currentPage = +this.route.snapshot.queryParamMap.get('page');
+      const size = +this.route.snapshot.queryParamMap.get('size');
+      this.AllProvidersAd(currentPage, size);
+    } else {
+      this.AllProvidersAd();
+    }
+  }
+  AllProvidersAd(page: number = 1, size: number = 10) {
+    this.providerService.AllnewProvidersAd(+page, +size).subscribe(sp => {
+        this.page = sp;
       },
       e => { console.log(e);
       });
   }
+
 
 
   ///////supprimer user/////
@@ -67,7 +74,7 @@ export class ProviderNewlistComponent implements OnInit {
   remove() {
     console.log("delete"+this.userdel);
     this.providerService.deleteprovider(this.userdel).subscribe(_ => {
-        this.users = this.users.filter(e => e.id != this.userdel);
+        this.page = this.page.filter(e => e.id != this.userdel);
       //  this.router.navigate(['/liste-providers']);
       },
       err => {
@@ -85,7 +92,7 @@ export class ProviderNewlistComponent implements OnInit {
     if(this.status===2)
     {console.log("Activeprovider "+this.status);
       this.providerService.Activeprovider(this.idpro).subscribe(_ => {
-          this.users = this.users.filter(e => e.id != this.userdel);
+          this.page = this.page.filter(e => e.id != this.userdel);
           console.log("getprovide");
         },
         err => {

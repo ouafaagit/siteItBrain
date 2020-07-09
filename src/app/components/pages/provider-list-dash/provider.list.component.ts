@@ -1,24 +1,27 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../services/user.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Role} from "../../enum/Role";
 import {ProviderService} from "../../services/providerService";
 
 import {Provider} from "../../models/provider.model";
+import {Subscription} from "rxjs";
 @Component({
     selector: 'app-speciality.list',
     templateUrl: './provider.list.component.html',
     styleUrls: ['./provider.list.component.css']
 })
 export class ProviderListComponent implements OnInit {
-  users: Provider[] = [];
+
   user = new Provider();
   Role = Role;
   userdel :number;
   status :number;
   idpro :number;
-
-  constructor(private userService: UserService,
+  page: any;
+  private paramSub: Subscription;
+  private querySub: Subscription;
+  constructor(private userService: UserService,private route: ActivatedRoute,
               private providerService: ProviderService,
               private router: Router) {
   }
@@ -28,26 +31,41 @@ export class ProviderListComponent implements OnInit {
     this.providerService.get(account).subscribe(u => {
       this.user = u;
       if(this.user.role==Role.ADMIN){
-        this.AllProvidersAd();
+        this.querySub = this.route.queryParams.subscribe(() => {
+          this.update();
+        });
+        this.paramSub = this.route.params.subscribe(() => {
+          this.update();
+        });
+
       }else {
         this.router.navigate(['/login']);
       }
-
     }, e => { console.log(e);
-
     });
-
+  }
+  update() {
+    if (this.route.snapshot.queryParamMap.get('page')) {
+      const currentPage = +this.route.snapshot.queryParamMap.get('page');
+      const size = +this.route.snapshot.queryParamMap.get('size');
+      this.AllProvidersAd(currentPage, size);
+    } else {
+      this.AllProvidersAd();
+    }
   }
 
-    AllProvidersAd() {
-    this.providerService.AllProvidersAd().subscribe(sp => {
-        this.users = sp;
+    AllProvidersAd(page: number = 1, size: number = 10) {
+    this.providerService.AllProvidersAd(+page, +size).subscribe(sp => {
+        this.page = sp;
       },
       e => { console.log(e);
       });
   }
 
-
+  ngOnDestroy(): void {
+    this.querySub.unsubscribe();
+    this.paramSub.unsubscribe();
+  }
   ///////supprimer user/////
   removeid(id:number){
     console.log("id  delete :"+id);
@@ -56,7 +74,7 @@ export class ProviderListComponent implements OnInit {
   remove() {
     console.log("delete"+this.userdel);
     this.providerService.deleteprovider(this.userdel).subscribe(_ => {
-        this.users = this.users.filter(e => e.id != this.userdel);
+        this.page = this.page.filter(e => e.id != this.userdel);
       //  this.router.navigate(['/liste-providers']);
       },
       err => {

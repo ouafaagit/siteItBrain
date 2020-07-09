@@ -1,0 +1,107 @@
+
+<div class="register-login-section spad">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 offset-lg-3">
+        <div class="register-form">
+          <h2>Profile</h2>
+          <form #form="ngForm" (ngSubmit)="onSubmit()">
+            <div class="group-input">
+              <input hidden [(ngModel)]="user.id" type="text" class="form-control form-control-lg"
+                     id="id" name="id" #id="ngModel">
+              <label for="firstname">Prénom </label>
+              <input [(ngModel)]="user.firstname" type="text" class="form-control form-control-lg"
+                     id="firstname" name="firstname"
+                     required #firstname="ngModel" [value]=user?.firstname>
+              <div  *ngIf="firstname.invalid && (firstname.dirty ||firstname.touched)">
+                <div *ngIf="firstname.errors.required">
+                  Le prénom est erroné.
+                </div>
+                <div *ngIf="firstname.errors.minlength">
+                  Le prénom doit comporter au moins 3 caractères.
+                </div>
+              </div>
+            </div>
+            <div class="group-input">
+              <label for="lastname">Nom *</label>
+              <input [(ngModel)]="user.lastname" type="text" class="form-control form-control-lg"  id="lastname" name="lastname"    required #lastname="ngModel" [value]=user?.lastname>
+              <div  *ngIf="lastname.invalid && (lastname.dirty ||lastname.touched)">
+                <div *ngIf="lastname.errors.required">
+                  Le nom est requis.
+                </div>
+                <div *ngIf="lastname.errors.minlength">
+                  Le nom doit comporter au moins 3 caractères.
+                </div>
+              </div>
+            </div>
+            <div class="group-input">
+              <label for="phone">numéro de téléphone*</label>
+              <input [(ngModel)]="user.phone" type="text" class="form-control form-control-lg" id="phone"
+                     name="phone" placeholder="Phone" required #phone="ngModel" [value]=user?.phone>
+              <div  *ngIf="phone.invalid && (phone.dirty ||phone.touched)">
+                <div *ngIf="phone.errors.required">
+                  numéro de téléphone est requis.
+                </div>
+              </div>
+            </div>
+            <div class="group-input">
+              <label for="email">Adresse email *</label>
+              <input [(ngModel)]="user.email" type="email" class="form-control form-control-lg" id="email"
+                     name="email"  email required autofocus  #email="ngModel"[value]=user?.email>
+              <div  *ngIf="email.invalid && (email.dirty ||email.touched)" >
+                <div *ngIf="email.errors.required" >
+                  Email est requis.
+                </div>
+                <div *ngIf="email.errors.email">
+                  Invalide Email.
+                </div>
+              </div>
+            </div>
+            <div class="group-input">
+              <label for="society">Nom de société</label>
+              <input [(ngModel)]="user.name" type="text"
+                     class="form-control form-control-lg" id="society" name="society"   [value]=user?.name>
+
+            </div>
+            <div class="group-input">
+              <label for="emailsociet">Email de société</label>
+              <input [(ngModel)]="user.emailsociety" type="email" class="form-control form-control-lg" id="emailsociet" name="emailsociet"  #emailsociet="ngModel"
+                     [value]=user?.emailsociety>
+              <div  *ngIf="emailsociet.invalid && (emailsociet.dirty ||emailsociet.touched)" >
+                <div *ngIf="emailsociet.errors.required" >
+                  Email est requis.
+                </div>  <div *ngIf="emailsociet.errors.email">
+                Invalide Email.
+              </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>les spécialités selectionner </label>
+                <div  *ngFor="let specialit of user.Specialities " >{{specialit.name}}--{{specialit.priceSpeciality}}
+                </div>
+            </div>
+            <div class="group-input">
+              <label>Prix total d'abonnement</label>
+              {{user.pricesubscription}}
+            </div>
+            <div class="group-input">
+              <label for="password">Mot de passe *</label>
+              <input  [(ngModel)]="user.password" type="password" class="form-control form-control-lg" id="password" name="password" placeholder="Entrer mot de passe" minlength="6" required #password="ngModel">
+              <div  *ngIf="password.invalid && (password.dirty ||password.touched)">
+                <div *ngIf="password.errors.required">
+                  Password est requis.
+                </div>
+                <div *ngIf="password.errors.minlength">
+                  Le mot de passe doit comporter au moins 6 caractères.
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="site-btn register-btn" [disabled]="!form.form.valid"  >Enregistrer</button>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

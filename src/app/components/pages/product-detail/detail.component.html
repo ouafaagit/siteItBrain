@@ -1,0 +1,566 @@
+<!--<h1 align="center" class="display-4 mb-5">{{title}}</h1>-->
+<!--<div class="row text-center justify-content-center">
+  <div class="col-lg-6 ">
+    <div class="card mb-4 ">
+      <img height="60%" class="card-img-top" src="{{productInfo?.productIcon}}">
+      <div class="card-body">
+        <h4 class="card-title ">{{productInfo?.productName}}</h4>
+        <form name="form" #form='ngForm' (ngSubmit)="productInfo?.productStatus == 0 && addToCart()">
+          <div class="text-left">
+            <input hidden name="productId" [value]=productInfo?.productId>
+            <p class="card-test"><strong>Description: </strong>{{productInfo?.productDescription}}</p>
+            <p class="card-text">
+              <strong>Price: </strong>
+              <label id="price">{{productInfo?.productPrice | currency}}</label>
+            </p>
+            <p class="card-text"><strong>Stock: </strong>{{productInfo?.productStock}}</p>
+
+            <label class="card-text">
+              <strong>Quantity: </strong>
+              <input [(ngModel)]=count
+                     (change)="validateCount()"
+                     type="number"
+                     name="count"
+                     required
+                     min="1"
+                     [max]=productInfo?.productStock
+              >
+            </label>
+
+
+            <p class="card-text"><strong>Subtotal: </strong>
+              <label id="subtotal">{{count * productInfo?.productPrice | currency}}</label>
+            </p>
+          </div>
+          <button type="submit" [disabled]="!form.form.valid" *ngIf="productInfo?.productStatus == 0; else offBlock"
+                  class="btn btn-primary btn-lg"
+          >Add to Cart
+          </button>
+          <ng-template #offBlock><a class="btn btn-secondary btn-lg disabled">Unavailable</a></ng-template>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>-->
+
+<app-header></app-header>
+
+<!-- Breadcrumbs -->
+<div class="breadcrumbs">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="bread-inner">
+          <ul class="bread-list">
+            <li><a href="/home">Acceuil<i class="ti-arrow-right"></i></a></li>
+            <li>Produit<i class="ti-arrow-right"></i></li>
+            <li class="active">Détail</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Breadcrumbs -->
+
+<!-- Product Shop Section Begin -->
+<section class="product-area shop-sidebar shop section">
+  <div class="container">
+    <div class="row">
+     <div class="col-lg-3">
+       <div class="filter-widget">
+        <div class="single-widget category">
+          <h3 class="title">Catégories</h3>
+          <ul class="categor-list">
+            <li *ngFor="let specialit of specialities"><a routerLink="/Speciality-products/{{specialit.id}}">{{specialit.name}}</a></li>
+
+          </ul>
+        </div>
+       </div>
+
+
+      <!--  <div class="filter-widget">
+          <h4 class="fw-title">Brand</h4>
+          <div class="fw-brand-check">
+            <div class="bc-item">
+              <label for="bc-calvin">
+                Calvin Klein
+                <input type="checkbox" id="bc-calvin">
+                <span class="checkmark"></span>
+              </label>
+            </div>
+            <div class="bc-item">
+              <label for="bc-diesel">
+                Diesel
+                <input type="checkbox" id="bc-diesel">
+                <span class="checkmark"></span>
+              </label>
+            </div>
+            <div class="bc-item">
+              <label for="bc-polo">
+                Polo
+                <input type="checkbox" id="bc-polo">
+                <span class="checkmark"></span>
+              </label>
+            </div>
+            <div class="bc-item">
+              <label for="bc-tommy">
+                Tommy Hilfiger
+                <input type="checkbox" id="bc-tommy">
+                <span class="checkmark"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="filter-widget">
+          <h4 class="fw-title">Price</h4>
+          <div class="filter-range-wrap">
+            <div class="range-slider">
+              <div class="price-input">
+                <input type="text" id="minamount">
+                <input type="text" id="maxamount">
+              </div>
+            </div>
+            <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
+                 data-min="33" data-max="98">
+              <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
+              <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+              <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+            </div>
+          </div>
+          <a href="#" class="filter-btn">Filter</a>
+        </div>
+        <div class="filter-widget">
+          <h4 class="fw-title">Color</h4>
+          <div class="fw-color-choose">
+            <div class="cs-item">
+              <input type="radio" id="cs-black">
+              <label class="cs-black" for="cs-black">Black</label>
+            </div>
+            <div class="cs-item">
+              <input type="radio" id="cs-violet">
+              <label class="cs-violet" for="cs-violet">Violet</label>
+            </div>
+            <div class="cs-item">
+              <input type="radio" id="cs-blue">
+              <label class="cs-blue" for="cs-blue">Blue</label>
+            </div>
+            <div class="cs-item">
+              <input type="radio" id="cs-yellow">
+              <label class="cs-yellow" for="cs-yellow">Yellow</label>
+            </div>
+            <div class="cs-item">
+              <input type="radio" id="cs-red">
+              <label class="cs-red" for="cs-red">Red</label>
+            </div>
+            <div class="cs-item">
+              <input type="radio" id="cs-green">
+              <label class="cs-green" for="cs-green">Green</label>
+            </div>
+          </div>
+        </div>
+        <div class="filter-widget">
+          <h4 class="fw-title">Size</h4>
+          <div class="fw-size-choose">
+            <div class="sc-item">
+              <input type="radio" id="s-size">
+              <label for="s-size">s</label>
+            </div>
+            <div class="sc-item">
+              <input type="radio" id="m-size">
+              <label for="m-size">m</label>
+            </div>
+            <div class="sc-item">
+              <input type="radio" id="l-size">
+              <label for="l-size">l</label>
+            </div>
+            <div class="sc-item">
+              <input type="radio" id="xs-size">
+              <label for="xs-size">xs</label>
+            </div>
+          </div>
+        </div>
+        <div class="filter-widget">
+          <h4 class="fw-title">Tags</h4>
+          <div class="fw-tags">
+            <a href="#">Towel</a>
+            <a href="#">Shoes</a>
+            <a href="#">Coat</a>
+            <a href="#">Dresses</a>
+            <a href="#">Trousers</a>
+            <a href="#">Men's hats</a>
+            <a href="#">Backpack</a>
+          </div>
+        </div>-->
+      </div>
+      <div class="col-lg-9">
+        <div class="row">
+          <div class="col-lg-6">
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+              <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+              </ol>
+            <div class="single-slider ">
+              <div class="carousel-inner ">
+                <div class="carousel-item active">
+                  <img class="d-block w-100"  [src]="retrievedImagee[1]" alt="first">
+
+                </div>
+                <div  *ngFor="let image of retrievedImagee" class="carousel-item">
+                  <img class="d-block w-100 " [src]="image" alt="Second slide">
+                </div>
+
+              </div>
+            </div>
+
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+            </div>
+
+          </div>
+          <div class="col-lg-6">
+            <div class="product-details">
+              <div class="pd-title">
+                <span>produit</span>
+                <h3>{{productInfo?.name}}</h3>
+                <a href="#"  (click)="addTowishlist(productInfo)" class="heart-icon"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+              </div>
+              <div class="pd-rating">
+                <i class="fa fa-star fa-2x"></i>
+                <i class="fa fa-star fa-2x"></i>
+                <i class="fa fa-star fa-2x"></i>
+                <i class="fa fa-star fa-2x "></i>
+                <i class="fa fa-star-o fa-2x"></i>
+                <span>  (5)</span>
+              </div>
+              <div class="pd-desc">
+                <p>{{productInfo?.description}}</p>
+                <div class="pd-color">
+                  <h6>MARQUE :</h6> <h4>{{productInfo?.marque}}</h4></div>
+              </div>
+              <div class="pd-color">
+                <h6>REFERENCE :</h6>
+                <div class="pd-desc">
+                  <p>{{productInfo?.reference}}</p>
+                  </div>
+                </div>
+              <div class="pd-color">
+                <h6>CATEGORIES :</h6>
+                <div class="pd-desc">
+                  <p>{{productInfo?.speciality?.name}} </p>
+                </div>
+              </div>
+              </div>
+            <div class="button">
+            <a class="btn" (click)="addToCart(productInfo)">Ajouter au panier</a>
+              <a (click)="Onclick()" data-toggle="modal" data-target="#modalcomplaint" class="btn">RECLAMER</a>
+
+            </div>
+
+
+            </div>
+          </div>
+        </div>
+      <!-- Single Widget -->
+      <div class="col-lg-3">
+      <div class="filter-widget">
+        <div class="single-widget recent-post">
+          <h3 class="title">Nos meilleur produits </h3>
+          <!-- Single Post -->
+          <div class="single-post first" *ngFor="let tendance of tendancen">
+            <div class="image">
+              <img src='data:image/jpeg;base64,{{tendance?.picByte}}' alt="#">
+            </div>
+            <div class="content">
+              <h5><a routerLink="/product/{{tendance.id}}" >{{tendance?.name}}</a></h5>
+              <p class="price">{{tendance?.marque}}</p>
+              <ul class="reviews">
+                <li class="yellow"><i class="ti-star"></i></li>
+                <li class="yellow"><i class="ti-star"></i></li>
+                <li class="yellow"><i class="ti-star"></i></li>
+                <li><i class="ti-star"></i></li>
+                <li><i class="ti-star"></i></li>
+              </ul>
+            </div>
+          </div>
+          <!-- End Single Post -->
+        </div>
+      </div>
+      </div>
+      <!--/ End Single Widget -->
+      <div class="col-lg-9">
+        <div class="product-tab">
+          <div class="tab-item">
+            <ul class="nav" role="tablist">
+              <li>
+                <a class="active" data-toggle="tab" href="#tab-1" role="tab">DESCRIPTION</a>
+              </li>
+              <li>
+                <a data-toggle="tab" href="#tab-2" role="tab">BROCHURE</a>
+              </li>
+              <li>
+                <a data-toggle="tab" href="#tab-3" role="tab">
+                  AVIS DES CLIENTS </a>
+              </li>
+            </ul>
+          </div>
+          <div class="tab-item-content">
+            <div class="tab-content">
+              <div class="tab-pane fade-in active" id="tab-1" role="tabpanel">
+                <div class="product-content">
+                  <div class="row">
+                    <div class="col-lg-7">
+                      <h5>Introduction</h5>
+                      <p> {{productInfo?.description}}</p>
+                      <h5>Caractéristiques</h5>
+                      <p>
+                        Marque    : {{productInfo?.marque}}<br>
+                        Référence : {{productInfo?.reference}}<br>
+                        Catégorie : {{productInfo?.speciality?.name}}<br>
+                        Nombre de vue : {{productInfo?.nombreVue}}<br>
+                      </p>
+                    </div>
+                    <div class="col-lg-5 ">
+                      <img  [src]="retrievedImagee[2]" alt="">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="tab-2" role="tabpanel">
+                <div class="specification-table">
+                  <a href="{{productInfo?.catalogue}}">{{productInfo?.catalogue}} </a> </div>
+              </div>
+              <div class="tab-pane fade" id="tab-3" role="tabpanel">
+                <div class="customer-review-option">
+                  <h4>Les commentaires</h4>
+           <!--       <div *ngIf="productInfo?.complaint?.length > 0">-->
+                  <div  *ngFor="let complaint of productInfo?.complaint" class="comment-option">
+                    <div class="co-item">
+                      <div class="avatar-pic">  <i class="fa fa-user-circle-o fa-3x"></i>
+                       <!-- <img src="img/product-single/avatar-1.png" alt="">-->
+                      </div>
+                      <div class="avatar-text">
+                        <div class="at-rating">
+                          <i class="fa fa-star "></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star-o"></i>
+                        </div>
+                        <h5>{{complaint?.name}}<span> {{complaint?.objet}}</span></h5>
+                        <div class="at-reply">{{complaint?.message}}</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="personal-rating">
+                    <h6>Votre note </h6>
+                    <div class="rating">
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star-o"></i>
+                    </div>
+
+                  <div class="leave-comment">
+                    <h4>Laissez un commentaire</h4>
+                    <form class="comment-form"  #form="ngForm" (ngSubmit)="onSubmit()">
+                      <div class="row">
+                        <div class="col">
+                          <input  [(ngModel)]="newcomplaint.name"  name="Name" type="text" placeholder="Name">
+                        </div>
+                        <div class="col">
+                          <input [(ngModel)]="newcomplaint.email" name="Email"  type="email" placeholder="Email">
+                        </div>
+                        <div class="col">
+                          <input [(ngModel)]="newcomplaint.objet"  name="Objet" type="text" placeholder="Objet">
+                        </div>
+                        <div class="col-lg-12">
+                          <textarea [(ngModel)]="newcomplaint.message" name="Messages" placeholder="Messages"></textarea>
+                          <button type="submit" class="site-btn" [disabled]="!form.form.valid" >
+                            Envoyer le message</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Product Shop Section End -->
+
+
+<!-- Related Products Section End -->
+<div class="related-products spad">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="section-title">
+          <h2>Produits recommendé</h2>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-3 col-sm-6" *ngFor="let tendance of prodrelated">
+        <!-- Start Single Product -->
+        <div class="single-product" >
+          <div class="product-img">
+            <a  class="embed-responsive embed-responsive-16by9" routerLink="/product/{{tendance.id}}">
+              <img class="default-img embed-responsive-item" src='data:image/jpeg;base64,{{tendance?.picByte}}' alt="#">
+            </a>
+            <div class="button-head">
+              <div class="product-action">
+                <a data-toggle="modal" data-target="#exampleModal" (click)="view(tendance.id)"title="Quick View" ><i class=" ti-eye"></i><span>Quick Shop</span></a>
+                <a title="Wishlist" (click)="addTowishlist(tendance)" routerLink="./"><i class=" ti-heart "></i><span>Add to Wishlist</span></a>
+                <a title="Compare" href="#"><i class="ti-bar-chart-alt"></i><span>Add to Compare</span></a>
+              </div>
+              <div class="product-action-2">
+                <a title="Add to cart" (click)="addToCart(tendance)">Add to cart</a>
+              </div>
+            </div>
+          </div>
+          <div class="pi-text">
+            <div class="catagory-name"><a routerLink="/product/{{tendance.id}}">{{tendance?.speciality}}</a></div>
+            <h5><a routerLink="/product/{{tendance.id}}">{{tendance?.name}}</a></h5>
+            <div class="product-price">
+              <span>{{tendance?.marque}}</span>
+            </div>
+          </div>
+        </div>
+        <!-- End Single Product -->
+      </div>
+
+
+    </div>
+  </div>
+</div>
+<!-- Related Products Section End -->
+
+<div class="modal" id="modalcomplaint" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabe" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabe">Réclamer</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <form #prfform="ngForm" (ngSubmit)="onSubmit()">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="Name">Nom *</label>
+                <input  [(ngModel)]="newcomplaint.name"   class="form-control form-control-lg" id="Name" name="Name" type="text" placeholder="Name">
+          </div>
+            <div class="form-group">
+            <label for="mail">Email *</label>
+                <input [(ngModel)]="newcomplaint.email" name="Email" class="form-control form-control-lg" id="mail" type="email" placeholder="Email">
+            </div>
+          <div class="form-group">
+            <label for="Objet">Objet *</label>
+                <input [(ngModel)]="newcomplaint.objet"  class="form-control form-control-lg"id="Objet" name="Objet" type="text" placeholder="Objet">
+          </div>
+          <div class="form-group">
+            <label for="Messages">Message *</label>
+                <textarea [(ngModel)]="newcomplaint.message" id="Messages" class="form-control form-control-lg" name="Messages" placeholder="Messages"></textarea>
+            </div>
+          </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-lg btn-danger " data-dismiss="modal" >Annuler</button>
+          <button type="submit" class="btn  btn-success btn-lg"
+                  [disabled]="!prfform.form.valid" >Envoyer</button>
+
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="ti-close" aria-hidden="true"></span></button>
+      </div>
+      <div class="modal-body">
+        <div class="row no-gutters">
+          <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+            <!-- Product Slider -->
+            <div class="product-gallery">
+              <div class="quickview-slider-active">
+                <div class="single-slider" *ngFor="let img of prodmodal?.pr_images">
+                  <img  src='data:image/jpeg;base64,{{img?.picByte}}'alt="#">
+                </div>
+
+              </div>
+            </div>
+            <!-- End Product slider -->
+          </div>
+          <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+            <div class="quickview-content">
+              <h2>{{prodmodal?.name}}</h2>
+              <div class="quickview-ratting-review">
+                <div class="quickview-ratting-wrap">
+                  <div class="quickview-ratting">
+                    <i class="yellow fa fa-star"></i>
+                    <i class="yellow fa fa-star"></i>
+                    <i class="yellow fa fa-star"></i>
+                    <i class="yellow fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                  </div>
+                  <a href="#"> (1 customer review)</a>
+                </div>
+                <div class="quickview-stock">
+                  <span><i class="fa fa-check-circle-o"></i> en stocke</span>
+                </div>
+              </div>
+              <h3>{{prodmodal?.speciality?.name}}</h3>
+              <div class="quickview-peragraph">
+                <p>{{prodmodal?.description}}</p>
+              </div>
+              <div class="size">
+                <div class="row">
+                  <div class="col-lg-6 col-12">
+                    <h5 class="title">REFERENCE</h5>
+                    <h6 class="title">{{prodmodal?.reference}}</h6>
+
+                  </div>
+                  <div class="col-lg-6 col-12">
+                    <h5 class="title">MARQUE</h5>
+                    <h6 class="title">{{prodmodal?.marque}}</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="add-to-cart">
+                <a href="#" class="btn" (click)="addToCart(prodmodal)">Ajouter au panel</a>
+                <a href="#" class="btn min"><i class="ti-heart"></i></a>
+                <a href="#" class="btn min"><i class="fa fa-compress"></i></a>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal end -->
+
+<app-footer></app-footer>

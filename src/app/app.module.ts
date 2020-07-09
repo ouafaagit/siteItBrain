@@ -10,6 +10,7 @@ import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/h
  import {CookieService} from "ngx-cookie-service";
  import {SiteclientModule} from "./components/pages/siteclient/siteclient.module";
  import {CommonModule} from "@angular/common";
+ import {NgxPaginationModule} from "ngx-pagination";
 
 
 
@@ -37,7 +38,7 @@ const appRoutes: Routes = [{
     HttpClientModule,
     FormsModule,
     SiteclientModule,
-
+    NgxPaginationModule
   ],
 
      /* provide: HTTP_INTERCEPTORS,
